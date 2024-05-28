@@ -1,0 +1,1 @@
+<a href="{{$route}}" class="md:text-start text-center md:text-white text-black font-bold md:hover:text-neutral-300 md:bg-transparent bg-emerald-400 hover:bg-emerald-500 md:hover:bg-transparent md:my-0 my-1 md:p-0 p-2">{{$title}}</a>
