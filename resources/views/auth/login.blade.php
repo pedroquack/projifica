@@ -9,7 +9,7 @@
                 <a href="{{route('register')}}"
                     class="text-emerald-400 hover:text-emerald-500 font-bold underline">Criar uma conta</a>
             </div>
-            <h1 class="font-bold text-2xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
+            <h1 class="font-bold text-xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
             <h2 class="font-bold text-base">Que bom te ter de volta</h2>
             <form action="{{route('login')}}" method="post" class="flex flex-col gap-3">
                 @csrf

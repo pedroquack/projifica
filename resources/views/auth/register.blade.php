@@ -9,7 +9,7 @@
                 <a href="{{route('login')}}"
                     class="text-emerald-400 hover:text-emerald-500 font-bold underline">Entrar</a>
             </div>
-            <h1 class="font-bold text-2xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
+            <h1 class="font-bold text-xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
         </div>
         <form action="{{route('register')}}" method="post" class="grid grid-cols-2 gap-4" enctype="multipart/form-data">
             @csrf
@@ -21,7 +21,7 @@
                 :placeholder="'Fale sobre você'" />
             <div class="flex flex-col md:col-span-1 col-span-2">
                 <label for="tel" class="font-bold">Telefone</label>
-                <input type="tel" name="phone" id="tel" pattern="\(\d{2}\)\s*\d{5}-\d{4}" class=" text-black rounded-lg 
+                <input type="tel" name="phone" id="tel" pattern="\(\d{2}\)\s*\d{5}-\d{4}" class=" text-black rounded-lg
                 @if($errors->has('phone')) input-error @endif"
                     placeholder="(00) 00000-0000" value="{{old('phone')}}">
                 @if ($errors->has('phone'))

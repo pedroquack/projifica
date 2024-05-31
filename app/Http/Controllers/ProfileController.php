@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Education;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class ProfileController extends Controller
 {
     public function index($name,$id){
         $user = User::find($id);
-        return view('profile.index',compact('user'));
+        $educations = Education::where('user_id', $id)->get();
+        return view('profile.index',compact('user','educations'));
     }
 
     public function edit(Request $request): View
@@ -59,5 +61,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function educationDestroy($id){
+        $education = Education::find($id);
+        $education->delete();
+        return redirect()->back()->with('message','Educação excluida com sucesso');
     }
 }

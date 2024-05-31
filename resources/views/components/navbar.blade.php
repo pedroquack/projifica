@@ -1,11 +1,11 @@
-<nav class="sticky top-0 bg-neutral-700 py-4 md:px-10 px-2">
+<nav class="sticky top-0 bg-neutral-700 py-2 md:px-6 px-2">
     <div x-data="{mobileMenuIsOpen: false}" class="flex md:flex-row flex-col items-center justify-between md:gap-8 ">
         <div class="flex justify-between items-center w-full md:gap-10 gap-1">
             <div class="w-48">
                 <a href={{route('home')}}><img src="{{asset('images/projifica_logo.png')}}" alt=""></a>
             </div>
             <form action="" class="flex w-full">
-                <input class="rounded-s-lg border-0 focus:outline-0 w-full text-sm md:text-base" type="text" name=""
+                <input class="rounded-s-lg border-0 focus:outline-0 w-full text-sm md:text-sm" type="text" name=""
                     id="" placeholder="Pesquisar Projetos">
                 <button class=" bg-emerald-400 rounded-e-lg w-10 flex justify-center items-center hover:bg-emerald-500"
                     type="submit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -29,7 +29,7 @@
         <!-- Desktop Menu -->
         <div class="w-full">
             <div :class="mobileMenuIsOpen ? 'show' : 'hidden'"
-                class="md:flex md:mt-0 mt-2 flex-col md:flex-row md:justify-evenly md:items-center md:gap-12 text-base gap-4">
+                class="md:flex md:mt-0 mt-2 flex-col md:flex-row md:justify-evenly md:items-center md:gap-12 text-sm gap-4">
                 <div x-data="{isOpen: false}" class="relative md:my-0 my-1">
                     <button type="button" @click="isOpen = ! isOpen"
                         class="md:hover:text-neutral-300 inline-flex cursor-pointer items-center gap-2 whitespace-nowrap text-white justify-between w-full md:bg-transparent bg-neutral-500 md:p-0 p-2">
