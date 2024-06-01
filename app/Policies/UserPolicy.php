@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Experience;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,8 @@ class UserPolicy
         //
     }
 
-    public function user_profile(User $user){
-        return $user->id === Auth::user()->id;
+    public function user_profile(User $user, User $profile){
+        return $user->id === $profile->id;
     }
+
 }
