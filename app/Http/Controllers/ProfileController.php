@@ -66,19 +66,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
-    public function educationDestroy($id){
-        $education = Education::find($id);
-        $education->delete();
-        return redirect()->back()->with('message','Educação excluida com sucesso');
-    }
-
-    public function experienceDestroy($id){
-        $experience = Experience::find($id);
-        Gate::authorize('destroy_experience',$experience,User::class);
-        $experience->delete();
-        return redirect()->back()->with('message','Experiência excluida com sucesso');
-    }
-
-
 }

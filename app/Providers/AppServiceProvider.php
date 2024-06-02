@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\User;
+use App\Policies\EducationPolicy;
+use App\Policies\ExperiencePolicy;
+use App\Policies\UserPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Experience::class, ExperiencePolicy::class);
+        Gate::policy(Education::class, EducationPolicy::class);
     }
 }
