@@ -18,9 +18,9 @@ class ProfileController extends Controller
 
     public function index($name,$id){
         $user = User::find($id);
-        $educations = Education::where('user_id', $id)->get();
-        $experiences = Experience::where('user_id', $id)->get();
-        return view('profile.index',compact('user','educations','experiences'));
+        //$educations = Education::where('user_id', $id)->get();
+        //$experiences = Experience::where('user_id', $id)->get();
+        return view('profile.index',compact('user'));
     }
 
     public function edit(Request $request): View

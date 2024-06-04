@@ -1,4 +1,6 @@
-<label for="image" class="col-span-2 h-24 p-2 text-center bg-white rounded-lg text-black" id="drop-area">
+
+
+<label for="image" class="col-span-2 w-full h-24 p-2 text-center bg-white rounded-lg border text-black" id="drop-area">
     <input type="file" accept="image/*" name="image" id="image" hidden>
     <div id="img-view" class="w-full h-full rounded-lg border-dashed border-2 hover:border-emerald-500 border-emerald-400 bg-emerald-50 hover:bg-emerald-100  cursor-pointer flex items-center justify-center gap-4">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-12 text-emerald-400">

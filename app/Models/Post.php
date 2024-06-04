@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Education extends Model
+class Post extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'school',
-        'course',
-        'start_date',
-        'end_date',
+        'title',
+        'body',
+        'image',
         'user_id',
     ];
 
@@ -21,4 +20,7 @@ class Education extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

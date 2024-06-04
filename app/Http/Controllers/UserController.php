@@ -16,18 +16,20 @@ class UserController extends Controller
 
     public function update(Request $request, $id){
 
+        $user = User::find($id);
+        Gate::authorize('user_profile',$user);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required','max:1000','min:150'],
-            'phone' => ['required',"unique:users,phone,{$id},id"]
+            'phone' => ['required',"unique:users,phone,{$id},id",'size:15']
         ]);
 
-        $user = User::find($id);
         $user->name = $request->name;
         $user->description = $request->description;
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('home');
+        return redirect()->route('profile.index',[$user->name,$user->id]);
     }
 }

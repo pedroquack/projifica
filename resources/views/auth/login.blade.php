@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="flex md:my-16 my-8 justify-center">
-    <div class="grid grid-cols-2">
         <div
-            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 text-white py-16 md:py-0 mx-4 md:mx-0 w-96">
+            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 shadow-sm text-white py-16 mx-4 md:mx-0 w-96">
             <div>
                 <small class="font-thin">Ainda não tem uma conta?</small>
                 <a href="{{route('register')}}"
@@ -21,9 +20,5 @@
                 </button>
             </form>
         </div>
-        <div class="hidden md:block bg-neutral-400 md:col-span-1 w-96">
-            <img src="{{asset('images/home_image.png')}}" alt="">
-        </div>
-    </div>
 </div>
 @endsection

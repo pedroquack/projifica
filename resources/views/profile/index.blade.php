@@ -3,20 +3,10 @@
     <x-session_message />
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
         <div class="md:w-3/4 w-4/5 flex flex-col gap-12">
-            <div class="grid grid-cols-3 bg-white text-center w-full text-black md:text-lg text-sm">
-                <a href="{{ route('profile.index', [$user->name, $user->id]) }}"
-                    class="hover:bg-neutral-300 transition-all md:col-span-1 col-span-3 p-3 @if (Route::getCurrentRoute()->getName() == 'profile.index') font-bold bg-neutral-300 @endif" >
-                    Perfil
-                </a>
-                <a href=""
-                    class="hover:bg-neutral-300 transition-all md:col-span-1 col-span-3 p-3 @if (Route::getCurrentRoute()->getName() == 'portfolio.index') font-bold bg-neutral-300 @endif">
-                    Portfólio
-                </a>
-                <a href=""
-                    class="hover:bg-neutral-300 transition-all md:col-span-1 col-span-3 p-3 @if (Route::getCurrentRoute()->getName() == 'user.posts.index') font-bold bg-neutral-300 @endif">
-                    Postagens
-                </a>
-            </div>
+            <x-profile_header>
+                <x-slot:user_name>{{ $user->name }}</x-slot:user_name>
+                <x-slot:user_id>{{ $user->id }}</x-slot:user_id>
+            </x-profile_header>
             <div class="grid grid-cols-3 gap-5">
                 <div class="md:col-span-1 col-span-3 bg-white py-4">
                     <div class="relative w-full h-full flex justify-center items-center">
@@ -49,11 +39,12 @@
                     </div>
                 </div>
                 <div class="relative md:col-span-2 col-span-3 md:p-12 p-6 bg-white flex flex-col gap-4 justify-between">
-                    <a href="{{ route('profile.edit',$user->id) }}" class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
+                    <a href="{{ route('profile.edit', $user->id) }}"
+                        class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
                         Editar Perfil
                     </a>
                     <div class="flex flex-col gap-4">
-                            <h1 class="font-bold text-xl">{{ $user->name }}</h1>
+                        <h1 class="font-bold text-xl">{{ $user->name }}</h1>
                         <p class="text-base text-wrap break-words">{{ $user->description }}</p>
                     </div>
                     <div class="flex flex-wrap items-center md:justify-between md:flex-row flex-col text-sm md:text-base">
@@ -118,11 +109,11 @@
                                 </div>
                                 <hr>
                             @endcan
-                            @if ($educations->count() == 0)
+                            @if ($user->educations->count() == 0)
                                 <h1>Nenhuma educação foi adicionada</h1>
                                 <hr>
                             @endif
-                            @foreach ($educations as $e)
+                            @foreach ($user->educations as $e)
                                 <div class="flex flex-col gap-1">
                                     <div>
                                         <h1 class="font-bold text-lg">{{ $e->school }}</h1>
@@ -135,10 +126,10 @@
                                             <form action="{{ route('education.destroy', $e->id) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="bg-red-400 hover:bg-red-500 p-1 rounded-full transition-all">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-5">
+                                                <button type="submit"
+                                                    class="bg-red-400 hover:bg-red-500 p-1 rounded-full transition-all">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                     </svg>
@@ -190,11 +181,11 @@
                                 </div>
                                 <hr>
                             @endcan
-                            @if ($experiences->count() == 0)
+                            @if ($user->experiences->count() == 0)
                                 <h1>Nenhuma experiência foi adicionada</h1>
                                 <hr>
                             @endif
-                            @foreach ($experiences as $e)
+                            @foreach ($user->experiences as $e)
                                 <div class="flex flex-col gap-1">
                                     <div class="flex md:flex-row flex-col md:justify-between md:items-center">
                                         <h1 class="text-lg font-bold">{{ $e->company }}</h1>

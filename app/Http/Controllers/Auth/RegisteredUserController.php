@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', Rules\Password::defaults()],
             'description' => ['required','max:1000','min:150'],
             'image' => ['required','mimes:png,jpg,jpeg,webp'],
-            'phone' => ['required',]
+            'phone' => ['unique:users','required','size:15']
         ]);
 
         if($request->has('image')){

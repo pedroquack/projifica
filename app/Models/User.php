@@ -34,11 +34,23 @@ class User extends Authenticatable
     }
 
     public function educations(){
-        return $this->hasMany('App\Models\Education');
+        return $this->hasMany(Education::class);
     }
 
     public function experiences(){
-        return $this->hasMany('App\Models\Experience');
+        return $this->hasMany(Experience::class);
+    }
+
+    public function portfolios(){
+        return $this->hasMany(Portfolio::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
 }
