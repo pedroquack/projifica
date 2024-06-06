@@ -10,7 +10,7 @@
             <div class="md:relative bg-white flex flex-col justify-center items-center py-4">
                 <h1 class="font-bold text-xl">PORTFÓLIO DE {{ strtoupper(explode(' ', $user->name)[0]) }}</h1>
                 <span>{{ $user->portfolios->count() }} itens encontrados</span>
-                @can('user_profile',$user)
+                @can('user_profile', $user)
                     <a href="{{ route('portfolio.create') }}"
                         class="md:absolute fixed bg-emerald-400 hover:bg-emerald-500 transition-all md:right-10 right-4 md:bottom-auto bottom-10 md:p-1 p-2 rounded-full md:shadow-none shadow-sm shadow-neutral-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -29,19 +29,8 @@
                         <div class="flex flex-col justify-around h-full gap-3">
                             <div class="flex justify-evenly items-center md:justify-between">
                                 <h1 class="font-bold text-lg">{{ $p->name }}</h1>
-                                @can('user_profile',$user)
-                                <div x-data="{ isOpen: false }">
-                                    <button @click="isOpen = !isOpen" type="button"
-                                        class="transition-all p-1 md:hover:bg-neutral-100 hover:bg-neutral-300 md:bg-white bg-neutral-200 rounded-full">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-                                        </svg>
-
-                                    </button>
-                                    <div x-show="isOpen" @click.away="isOpen = false"
-                                        class="absolute flex flex-col bg-white shadow-lg border border-neutral-100 rounded-lg p-1">
+                                @can('user_profile', $user)
+                                    <x-options_dropdown>
                                         <a class="hover:bg-neutral-200 transition-all p-2"
                                             href="{{ route('portfolio.edit', $p->id) }}">Editar</a>
                                         <form action="{{ route('portfolio.destroy', $p->id) }}" method="post">
@@ -50,8 +39,7 @@
                                             <button type="submit"
                                                 class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
                                         </form>
-                                    </div>
-                                </div>
+                                    </x-options_dropdown>
                                 @endcan
                             </div>
                             <p class=" text-wrap break-all">{{ $p->description }}</p>

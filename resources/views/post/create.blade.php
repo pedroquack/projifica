@@ -19,7 +19,7 @@
                 <div class="flex flex-col">
                     <label for="body">Descrição</label>
                     <textarea type="text" id="body" name="body"
-                        placeholder="Escreva aqui sua postagem" rows="3"
+                        placeholder="Escreva aqui sua postagem"
                         class="rounded-lg border-neutral-400 resize-none @if ($errors->has('body')) input-error @endif">{{ old('body') }}</textarea>
                     @if ($errors->has('body'))
                         <span class="invalid-feedback">
@@ -44,4 +44,13 @@
             </form>
         </div>
     </div>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#body' ),{
+                toolbar: ['bold', 'link', 'bulletedList'],
+            })
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 @endsection

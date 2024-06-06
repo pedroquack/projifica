@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="update" method="post" class="flex flex-col gap-5">
+    <form wire:submit.prevent="update" method="post" class="flex flex-col gap-5" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <label for="image" class="col-span-2 h-24 p-2 text-center bg-white rounded-lg text-black" id="drop-area">

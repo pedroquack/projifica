@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\PortfolioController;
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::get('post/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::put('post/{id}', [PostController::class, 'update'])->name('post.update');
     Route::delete('post/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+    //Comment
+    Route::delete('comment/{id}',[CommentController::class, 'destroy'])->name('comment.destroy');
 });
 //Profile
 Route::get('profile/{username}-{userid}', [ProfileController::class, 'index'])->name('profile.index');

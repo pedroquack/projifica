@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    <x-session_message />
+    <style>
+        ul {
+            list-style: inherit;
+            list-style-position: inside;
+        }
+    </style>
     <div class="flex flex-col md:my-16 my-8 justify-center gap-6 items-center md:text-start text-center">
         <div class="md:w-3/5 w-4/5 flex flex-col gap-3 bg-white p-6">
             @if ($post->image)
@@ -8,8 +13,20 @@
                     <img src="{{ asset($post->image) }}" alt="" class="max-h-96 object-contain">
                 </div>
             @endif
-            <h1 class="font-bold text-xl">{{ $post->title }}</h1>
-            <p class="break-all">{{ $post->body }}</p>
+            <div class="flex justify-between">
+                <h1 class="font-bold text-xl">{{ $post->title }}</h1>
+                @can('user_post',$post)
+                <x-options_dropdown>
+                    <a class="hover:bg-neutral-200 transition-all p-2" href="{{ route('post.edit', $post->id) }}">Editar</a>
+                    <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
+                    </form>
+                </x-options_dropdown>
+                @endcan
+            </div>
+            <div class="break-word break-words">{!! $post->body !!}</div>
             <div
                 class="flex md:flex-row flex-col justify-center md:justify-between md:my-0 my-2 md:gap-0 gap-2 items-center">
                 <a href="{{ route('profile.index', [$post->user->name, $post->user->id]) }}"
@@ -28,14 +45,53 @@
         <div class="md:w-3/5 w-4/5 flex flex-col gap-3 bg-white p-6">
             <div>
                 @auth
-                    @livewire('comment',['post' => $post ,'user_id' => Auth::user()->id])
+                    @livewire('comment', ['post' => $post, 'user_id' => Auth::user()->id])
                 @else
                     <h1 class="font-bold text-lg">{{ $post->comments->count() }} comentários</h1>
                     <div class="flex flex-col justify-center items-center gap-1 bg-neutral-100 p-3">
-                        <span class="font-bold">Você precisa estar conectado para comentar e ler comentários</span>
-                        <a href="{{ route("login") }}" class="bg-emerald-400 hover:bg-emerald-500 px-5 py-1 shadow-sm shadow-neutral-500 transition-all">Entrar</a>
+                        <span class="font-bold">Você precisa estar conectado para comentar</span>
+                        <a href="{{ route('login') }}"
+                            class="bg-emerald-400 hover:bg-emerald-500 px-5 py-1 shadow-sm shadow-neutral-500 transition-all">Entrar</a>
                     </div>
                 @endauth
+            </div>
+            <div class="mt-4">
+                @if ($post->comments->count() > 0)
+                    <hr>
+                    <div class="flex flex-col">
+                        @foreach ($post->comments->sortByDesc('created_at') as $c)
+                            <div class="flex flex-col gap-3 p-2">
+                                <div class="flex md:flex-row flex-col justify-between items-center">
+                                    <a href="{{ route('profile.index', [$c->user->name, $c->user->id]) }}"
+                                        class="md:w-1/4 w-full flex md:justify-start justify-center">
+                                        <div class="flex items-center gap-3 hover:bg-neutral-100 rounded-full md:w-full">
+                                            <img class="rounded-full w-8 h-8 object-cover"
+                                                src="{{ asset($c->user->image) }}" alt="">
+                                            <span>{{ explode(' ', $c->user->name)[0] }}</span>
+                                        </div>
+                                    </a>
+                                    <div class="flex items-center gap-2">
+                                        <small class="text-neutral-500">
+                                            Postado {{ $c->created_at->format('d/m/Y') }} ás
+                                            {{ $c->created_at->format('H:i') }}
+                                        </small>
+                                        @can('user_comment',$c)
+                                        <x-options_dropdown>
+                                            <form action="{{ route('comment.destroy', $c->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
+                                            </form>
+                                        </x-options_dropdown>
+                                        @endcan
+                                    </div>
+                                </div>
+                                <p class="text-sm break-word break-words">{{ $c->body }}</p>
+                                <hr>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>

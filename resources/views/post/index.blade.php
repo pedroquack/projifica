@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <x-session_message />
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
         <div class="md:w-3/4 w-4/5 flex flex-col gap-6">
             <x-profile_header>
@@ -20,16 +19,16 @@
                     </a>
                 @endcan
             </div>
-            @foreach ($user->posts as $p)
+            @foreach ($user->posts->sortDesc() as $p)
             <a href="{{ route('post.show',$p->id) }}">
-                <div class="bg-white md:p-6 px-3 py-8 flex flex-col gap-4 hover:bg-neutral-100">
-                    <div class="flex md:flex-row flex-col justify-between items-center">
+                <div class="bg-white md:p-6 px-3 py-8 flex flex-col gap-4 hover:bg-neutral-100 max-h-64">
+                    <div class="flex md:flex-row flex-col justify-between items-center text-wrap break-all">
                         <h1 class="text-lg font-bold">{{ $p->title }}</h1>
                         <small class="text-neutral-500">Postado em {{ $p->created_at->format('d/m/Y')}} ás {{ $p->created_at->format('H:i')}}</small>
                     </div>
-                    <p class="overflow-hidden break-all overflow-ellipsis line-clamp-3">
-                        {{$p->body}}
-                    </p>
+                    <div class="break-all overflow-ellipsis line-clamp-3">
+                        {!! $p->body !!}
+                    </div>
                     <div class="flex md:flex-row flex-col @if($p->image) md:justify-between @else justify-end @endif">
                         @if ($p->image)
                             <span class="font-bold">Contém imagem</span>

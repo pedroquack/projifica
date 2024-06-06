@@ -17,37 +17,4 @@
             </button>
         </div>
     </form>
-    <div class="mt-4">
-        @if ($post->comments->count() > 0)
-            <hr>
-            <div class="flex flex-col">
-            @foreach ($post->comments->sortByDesc('created_at') as $c)
-                <div class="flex flex-col gap-3 p-2">
-                    <div class="flex justify-between items-center">
-                        <a href="{{ route('profile.index', [$c->user->name, $c->user->id]) }}"
-                            class="md:w-1/4 w-full flex md:justify-start justify-center">
-                            <div class="flex items-center gap-3 hover:bg-neutral-100 rounded-full md:w-full">
-                                <img class="rounded-full w-8 h-8 object-cover" src="{{ asset($c->user->image) }}"
-                                    alt="">
-                                <span>{{ explode(' ', $c->user->name)[0] }}</span>
-                            </div>
-                        </a>
-                        <small class="text-neutral-500">
-                            Postado {{ $c->created_at->format('d/m/Y') }} ás {{ $c->created_at->format('H:i') }}
-                        </small>
-                    </div>
-                    <p class="text-sm">{{ $c->body }}</p>
-                    <hr>
-                </div>
-            @endforeach
-        </div>
-        @endif
-    </div>
-
-    <script>
-        const body = document.getElementById('body')
-        window.addEventListener('commentAdded', (event) => {
-            body.value = ''
-        })
-    </script>
 </div>

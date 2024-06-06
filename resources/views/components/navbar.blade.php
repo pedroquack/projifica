@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 @auth
-                <div class="flex flex-row items-center gap-2 w-full justify-end">
+                <div class="flex flex-row items-center gap-2 max-w-full">
                     <img src="{{asset(Auth::user()->image)}}" alt="Foto de {{Auth::user()->name}}"
                         class="h-10 w-10 rounded-full object-cover md:block hidden">
                     <div x-data="{isOpen: false}" class="relative md:my-0 my-1 md:w-fit w-full">

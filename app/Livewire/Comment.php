@@ -31,6 +31,6 @@ class Comment extends Component
             'post_id' => $this->post->id
         ]);
 
-        $this->dispatch('commentAdded');
+        return redirect()->route('post.show',$this->post->id);
     }
 }

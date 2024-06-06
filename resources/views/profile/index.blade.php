@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <x-session_message />
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
         <div class="md:w-3/4 w-4/5 flex flex-col gap-12">
             <x-profile_header>
@@ -39,10 +38,12 @@
                     </div>
                 </div>
                 <div class="relative md:col-span-2 col-span-3 md:p-12 p-6 bg-white flex flex-col gap-4 justify-between">
+                    @can('user_profile', $user)
                     <a href="{{ route('profile.edit', $user->id) }}"
                         class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
                         Editar Perfil
                     </a>
+                    @endcan
                     <div class="flex flex-col gap-4">
                         <h1 class="font-bold text-xl">{{ $user->name }}</h1>
                         <p class="text-base text-wrap break-words">{{ $user->description }}</p>
@@ -189,48 +190,37 @@
                                 <div class="flex flex-col gap-1">
                                     <div class="flex md:flex-row flex-col md:justify-between md:items-center">
                                         <h1 class="text-lg font-bold">{{ $e->company }}</h1>
-                                        <div class="flex md:gap-5 md:justify-start justify-center relative">
+                                        <div class="flex md:gap-5 gap-3 md:justify-start items-center justify-center relative">
                                             <span>{{ $e->start_date }} a {{ $e->end_date }}</span>
                                             @can('user_profile', $user)
-                                                <div x-data="{ isOpen: false }" class="md:static absolute right-0 -top-7">
-                                                    <button @click="isOpen = !isOpen" type="button"
-                                                        class="bg-emerald-400 hover:bg-emerald-500 rounded-full transition-all p-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                            fill="currentColor" class="size-5">
-                                                            <path fill-rule="evenodd"
-                                                                d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 0 1-.517.608 7.45 7.45 0 0 0-.478.198.798.798 0 0 1-.796-.064l-.453-.324a1.875 1.875 0 0 0-2.416.2l-.243.243a1.875 1.875 0 0 0-.2 2.416l.324.453a.798.798 0 0 1 .064.796 7.448 7.448 0 0 0-.198.478.798.798 0 0 1-.608.517l-.55.092a1.875 1.875 0 0 0-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 0 1-.064.796l-.324.453a1.875 1.875 0 0 0 .2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 0 1 .796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 0 1 .517-.608 7.52 7.52 0 0 0 .478-.198.798.798 0 0 1 .796.064l.453.324a1.875 1.875 0 0 0 2.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 0 1-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 0 0 1.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 0 1-.608-.517 7.507 7.507 0 0 0-.198-.478.798.798 0 0 1 .064-.796l.324-.453a1.875 1.875 0 0 0-.2-2.416l-.243-.243a1.875 1.875 0 0 0-2.416-.2l-.453.324a.798.798 0 0 1-.796.064 7.462 7.462 0 0 0-.478-.198.798.798 0 0 1-.517-.608l-.091-.55a1.875 1.875 0 0 0-1.85-1.566h-.344ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z"
-                                                                clip-rule="evenodd" />
-                                                        </svg>
-                                                    </button>
-                                                    <div x-show="isOpen" @click.away="isOpen = false"
-                                                        class="absolute flex flex-col bg-white shadow-lg border border-neutral-100 rounded-lg">
-                                                        <div x-data="{ modal: false }">
-                                                            <button type="button" @click="modal = !modal"
-                                                                class="p-2 hover:bg-neutral-200 transition-all w-full text-start">
-                                                                Editar
-                                                            </button>
+                                                <x-options_dropdown>
+                                                    <div x-data="{ modal: false }">
+                                                        <button type="button" @click="modal = !modal"
+                                                            class="p-2 hover:bg-neutral-200 transition-all w-full text-start">
+                                                            Editar
+                                                        </button>
+                                                        <div x-show="modal"
+                                                            class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
                                                             <div x-show="modal"
-                                                                class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                                                                <div x-show="modal"
-                                                                    class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
-                                                                    @click.away="modal = false"
-                                                                    x-transition:enter="motion-safe:ease-out duration-300"
-                                                                    x-transition:enter-start="opacity-0 scale-90"
-                                                                    x-transition:enter-end="opacity-100 scale-100">
-                                                                    <h1 class="font-bold md:text-2xl text-lg pb-5">Editar
-                                                                        experiência</h1>
-                                                                    @livewire('experience-update', ['e' => $e])
-                                                                </div>
+                                                                class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
+                                                                @click.away="modal = false"
+                                                                x-transition:enter="motion-safe:ease-out duration-300"
+                                                                x-transition:enter-start="opacity-0 scale-90"
+                                                                x-transition:enter-end="opacity-100 scale-100">
+                                                                <h1 class="font-bold md:text-2xl text-lg pb-5">Editar
+                                                                    experiência</h1>
+                                                                @livewire('experience-update', ['e' => $e])
                                                             </div>
                                                         </div>
-                                                        <form action="{{ route('experience.destroy', $e->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="p-2 hover:bg-neutral-200 transition-all">Remover</a>
-                                                        </form>
                                                     </div>
+                                                    <form action="{{ route('experience.destroy', $e->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="p-2 hover:bg-neutral-200 transition-all">Remover</a>
+                                                    </form>
+                                                </x-options_dropdown>
                                                 </div>
                                             @endcan
                                         </div>
