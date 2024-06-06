@@ -6,6 +6,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('post/{id}', [PostController::class, 'destroy'])->name('post.destroy');
     //Comment
     Route::delete('comment/{id}',[CommentController::class, 'destroy'])->name('comment.destroy');
+    //Project
+    Route::resource('project', ProjectController::class);
 });
 //Profile
 Route::get('profile/{username}-{userid}', [ProfileController::class, 'index'])->name('profile.index');
