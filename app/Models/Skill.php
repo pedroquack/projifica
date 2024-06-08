@@ -16,4 +16,8 @@ class Skill extends Model
     public function portfolios(){
         return $this->belongsToMany(Portfolio::class,'link_skill_portfolio');
     }
+
+    public function projects(){
+        return $this->belongsToMany(Project::class,'link_skill_projects');
+    }
 }

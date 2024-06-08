@@ -4,8 +4,8 @@
             <div class="w-48">
                 <a href={{route('home')}}><img src="{{asset('images/projifica_logo.png')}}" alt=""></a>
             </div>
-            <form action="" class="flex w-full">
-                <input class="rounded-s-lg border-0 focus:outline-0 w-full text-sm md:text-sm" type="text" name=""
+            <form action="{{ route('project.search') }}" class="flex w-full">
+                <input class="rounded-s-lg border-0 focus:outline-0 w-full text-sm md:text-sm" type="text" name="search_bar"
                     id="" placeholder="Pesquisar Projetos">
                 <button class=" bg-emerald-400 rounded-e-lg w-10 flex justify-center items-center hover:bg-emerald-500"
                     type="submit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -41,11 +41,14 @@
                     </button>
 
                     <div x-cloak x-show="isOpen" x-transition @click.outside="isOpen = false"
-                        class="absolute md:top-8 top-10 z-20 left-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md">
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais recentes</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais antigos</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais concorridos</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Menos concorridos</a>
+                        class="absolute md:top-8 top-10 z-50 left-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md">
+                        <a href="{{route('project.index')}}" class="p-2 hover:bg-neutral-200">Todos os projetos</a>
+                        <a href="{{route('project.popular')}}" class="p-2 hover:bg-neutral-200">Mais concorridos</a>
+                        <a href="{{route('project.unpopular')}}" class="p-2 hover:bg-neutral-200">Menos concorridos</a>
+                        @auth
+                            <a href="{{route('user.projects',Auth::user()->id)}}" class="p-2 hover:bg-neutral-200">Meus projetos</a>
+                            <a href="{{route('project.joined',Auth::user()->id)}}" class="p-2 hover:bg-neutral-200">Projetos inscritos</a>
+                        @endauth
                     </div>
                 </div>
 
@@ -61,10 +64,10 @@
 
                     <div x-cloak x-show="isOpen" x-transition @click.outside="isOpen = false"
                         class="absolute md:top-8 top-10 left-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md z-20">
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais recentes</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais antigos</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais interações</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Menos interações</a>
+                        <a href="{{route('post.index')}}" class="p-2 hover:bg-neutral-200">Mais recentes</a>
+                        <a href="{{route('post.oldest')}}" class="p-2 hover:bg-neutral-200">Mais antigos</a>
+                        <a href="{{route('post.more.comments')}}" class="p-2 hover:bg-neutral-200">Mais interações</a>
+                        <a href="{{route('post.less.comments')}}" class="p-2 hover:bg-neutral-200">Menos interações</a>
                     </div>
                 </div>
 
@@ -102,7 +105,6 @@
                         <div x-cloak x-show="isOpen" x-transition @click.outside="isOpen = false"
                             class="absolute md:top-8 top-10 right-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md z-20">
                             <a href="{{route('profile.index',[Auth::user()->name,Auth::user()->id])}}" class="p-2 hover:bg-neutral-200">Meu perfil</a>
-                            <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Meus projetos</a>
                             <form action="{{route('logout')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <button type="submit" class="p-2 w-full hover:bg-neutral-200 text-start">Sair</button>

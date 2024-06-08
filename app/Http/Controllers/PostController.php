@@ -12,10 +12,32 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function index()
+    {
+        $posts = Post::orderBy('created_at','DESC')->paginate(10);
+        return view('post.index', compact('posts'));
+    }
+
+    public function oldest(){
+        $posts = Post::orderBy('created_at')->paginate(10);
+        return view('post.index', compact('posts'));
+    }
+
+    public function more_comments(){
+        $posts = Post::withCount('comments')->orderBy('comments_count', 'DESC')->paginate(10);
+        return view('post.index', compact('posts'));
+    }
+
+    public function less_comments(){
+        $posts = Post::withCount('comments')->orderBy('comments_count')->paginate(10);
+        return view('post.index', compact('posts'));
+    }
+
     public function user_index($name, $id)
     {
         $user = User::find($id);
-        return view('post.index', compact('user'));
+        return view('post.user_index', compact('user'));
     }
 
     /**

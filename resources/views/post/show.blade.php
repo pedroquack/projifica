@@ -9,9 +9,9 @@
     <div class="flex flex-col md:my-16 my-8 justify-center gap-6 items-center md:text-start text-center">
         <div class="md:w-3/5 w-4/5 flex flex-col gap-3 bg-white p-6">
             @if ($post->image)
-                <div class="bg-neutral-400 flex justify-center">
-                    <img src="{{ asset($post->image) }}" alt="" class="max-h-96 object-contain">
-                </div>
+            <div class="w-full max-h-96 overflow-hidden bg-cover" style="background-image: url({{ asset($post->image) }})">
+                <img src="{{ asset($post->image) }}" alt="" class="max-h-96 w-full object-contain">
+            </div>
             @endif
             <div class="flex justify-between">
                 <h1 class="font-bold text-xl">{{ $post->title }}</h1>

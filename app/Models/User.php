@@ -53,4 +53,12 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function projects(){
+        return $this->hasMany(Project::class);
+    }
+
+    public function joined_projects(){
+        return $this->belongsToMany(Project::class,'link_user_projects');
+    }
+
 }

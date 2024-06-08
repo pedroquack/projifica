@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return view('projects.index');
+        //return view('projects.index');
     } else {
         return view('home.home');
     }
@@ -40,12 +40,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('comment/{id}',[CommentController::class, 'destroy'])->name('comment.destroy');
     //Project
     Route::resource('project', ProjectController::class);
+    Route::get('user/{id}/projects', [ProjectController::class, 'user_projects'])->name('user.projects');
+    Route::get('user/{id}/projects/joined', [ProjectController::class, 'project_joined'])->name('project.joined');
+    Route::get('projects/most-popular', [ProjectController::class, 'most_popular'])->name('project.popular');
+    Route::get('projects/less-popular', [ProjectController::class, 'less_popular'])->name('project.unpopular');
+    Route::get('projects/search', [ProjectController::class, 'search'])->name('project.search');
 });
 //Profile
 Route::get('profile/{username}-{userid}', [ProfileController::class, 'index'])->name('profile.index');
 //Portfolio
 Route::get('portfolio/{username}-{userid}', [PortfolioController::class, 'index'])->name('portfolio.index');
 //Post
-Route::get('posts/{username}-{userid}',[PostController::class, 'user_index'])->name('post.user.index');
+Route::get('posts/{username}/{userid}',[PostController::class, 'user_index'])->name('post.user.index');
 Route::get('post/{id}',[PostController::class, 'show'])->name('post.show');
+Route::get('posts',[PostController::class, 'index'])->name('post.index');
+Route::get('posts/oldest',[PostController::class, 'oldest'])->name('post.oldest');
+Route::get('posts/more-comments',[PostController::class, 'more_comments'])->name('post.more.comments');
+Route::get('posts/less-comments',[PostController::class, 'less_comments'])->name('post.less.comments');
 require __DIR__ . '/auth.php';

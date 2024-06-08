@@ -87,27 +87,16 @@
                     <div x-cloak x-show="isOpen" class="bg-white flex flex-col p-2" x-collapse>
                         <div class="flex flex-col gap-3">
                             @can('user_profile', $user)
-                                <div x-data="{ modal: false }">
-                                    <button type="button" @click="modal = !modal"
-                                        class="bg-emerald-400 hover:bg-emerald-500 transition-all p-2 text-base font-base w-full flex justify-between items-center">
+                                <x-modal>
+                                    <x-slot:button>
                                         Adicionar
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>
-
-                                    </button>
-                                    <div x-show="modal"
-                                        class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                                        <div x-show="modal" class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
-                                            @click.away="modal = false" x-transition:enter="motion-safe:ease-out duration-300"
-                                            x-transition:enter-start="opacity-0 scale-90"
-                                            x-transition:enter-end="opacity-100 scale-100">
-                                            <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar educação</h1>
-                                            @livewire('education')
-                                        </div>
-                                    </div>
-                                </div>
+                                          </svg>
+                                    </x-slot:button>
+                                    <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar educação</h1>
+                                    @livewire('education')
+                                </x-modal>
                                 <hr>
                             @endcan
                             @if ($user->educations->count() == 0)
@@ -159,27 +148,16 @@
                     <div x-cloak x-show="isOpen" class="bg-white flex flex-col p-2" x-collapse>
                         <div class="flex flex-col gap-3">
                             @can('user_profile', $user)
-                                <div x-data="{ modal: false }">
-                                    <button type="button" @click="modal = !modal"
-                                        class="bg-emerald-400 hover:bg-emerald-500 transition-all p-2 text-base font-base w-full flex justify-between items-center">
+                                <x-modal>
+                                    <x-slot:button>
                                         Adicionar
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>
-
-                                    </button>
-                                    <div x-show="modal"
-                                        class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                                        <div x-show="modal" class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
-                                            @click.away="modal = false" x-transition:enter="motion-safe:ease-out duration-300"
-                                            x-transition:enter-start="opacity-0 scale-90"
-                                            x-transition:enter-end="opacity-100 scale-100">
-                                            <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar experiência</h1>
-                                            @livewire('experience')
-                                        </div>
-                                    </div>
-                                </div>
+                                          </svg>
+                                    </x-slot:button>
+                                    <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar experiência</h1>
+                                    @livewire('experience')
+                                </x-modal>
                                 <hr>
                             @endcan
                             @if ($user->experiences->count() == 0)
