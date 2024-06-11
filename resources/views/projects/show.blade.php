@@ -1,19 +1,39 @@
 @extends('layouts.app')
 @section('content')
+    <x-session_message />
     <div class="flex justify-center my-12">
         <div class="bg-white grid grid-cols-4 p-6 md:w-4/5 w-4/5">
             <div class="md:col-span-3 col-span-4 flex flex-col gap-4">
                 <div class="md:pr-5 flex flex-col gap-3">
                     <div class="flex md:flex-row flex-col justify-between md:items-center items-start">
                         <h1 class="font-bold text-lg">{{ $project->title }}</h1>
-                        <div class="bg-emerald-400 rounded-full h-fit px-3">
-                            Aberto
+                        <div class="flex items-center gap-3">
+                            @if ($project->expiration < now())
+                                <div class="bg-neutral-400 px-3 rounded-full">Fechado</div>
+                            @else
+                                <div class="bg-emerald-400 rounded-full h-fit px-3">
+                                    Aberto
+                                </div>
+                            @endif
+                            @can('update', $project)
+                                <x-options_dropdown>
+                                    <a class="hover:bg-neutral-200 transition-all p-2"
+                                        href="{{ route('project.edit', $project->id) }}">Editar</a>
+                                    <form action="{{ route('project.destroy', $project->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
+                                    </form>
+                                </x-options_dropdown>
+                            @endcan
                         </div>
                     </div>
                     <div>
                         <ul class="list-disc list-inside flex md:flex-row flex-col md:gap-4 gap-0">
-                            <li>Acaba em {{ $diff }} dias</li>
-                            <li>Postado {{ $project->created_at->format('i/m/Y') }}</li>
+                            @if ($project->expiration >= now())
+                                <li>Acaba em {{ $diff }} dias</li>
+                            @endif
+                            <li>Postado {{ $project->created_at->format('d/m/Y') }}</li>
                             <li>{{ $project->candidates->count() }} candidatos</li>
                         </ul>
                     </div>
@@ -83,26 +103,30 @@
                 <hr>
                 <div class="flex md:flex-row flex-col justify-between items-center">
                     <x-back_button />
-                    @can('join',$project)
+                    @can('join', $project)
                         <x-modal width="md:w-1/4 w-full" border="rounded-lg">
                             <x-slot:button>
                                 Quero me candidatar
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                                    <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
+                                    <path
+                                        d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
                                 </svg>
                             </x-slot:button>
-                            @livewire('join-project',['user' => Auth::user(),'project' => $project])
+                            @livewire('join-project', ['user' => Auth::user(), 'project' => $project])
                         </x-modal>
                     @elsecan('read_proposals',$project)
                         <x-modal width="md:w-1/4 w-full" border="rounded-lg">
                             <x-slot:button>
                                 Ver candidatos
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                                    <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
-                                    <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
-                                  </svg>
+                                    <path fill-rule="evenodd"
+                                        d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
+                                        clip-rule="evenodd" />
+                                    <path
+                                        d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+                                </svg>
                             </x-slot:button>
-                            @livewire('candidates',['project' => $project])
+                            @livewire('candidates', ['project' => $project])
                         </x-modal>
                     @else
                         <span class="text-center">Você já se candidatou a esse projeto!</span>

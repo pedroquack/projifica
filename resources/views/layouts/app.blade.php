@@ -18,9 +18,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-roboto text-sm md:text-base bg-neutral-200">
-        <header>
             <x-navbar></x-navbar>
-        </header>
         <main>
             <x-session_message />
             @yield('content')

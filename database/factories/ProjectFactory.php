@@ -28,7 +28,7 @@ class ProjectFactory extends Factory
             'title' => fake()->name(),
             'description' => fake()->realText(),
             'modality' => $modalities[rand(0,2)],
-            'expiration' => fake()->dateTimeBetween($startDate = 'now',$endDate = "+2 years"),
+            'expiration' => fake()->dateTimeBetween($startDate = 'now',$endDate = "+2 years",$timezone = null),
             'slots' => random_int(1,100),
             'user_id' => User::factory(),
         ];

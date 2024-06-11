@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        //return view('projects.index');
-    } else {
-        return view('home.home');
+        return redirect()->route('project.index');
     }
+    return view('home.home');
 })->name('home');
 
 Route::middleware('auth')->group(function () {
@@ -57,4 +56,10 @@ Route::get('posts',[PostController::class, 'index'])->name('post.index');
 Route::get('posts/oldest',[PostController::class, 'oldest'])->name('post.oldest');
 Route::get('posts/more-comments',[PostController::class, 'more_comments'])->name('post.more.comments');
 Route::get('posts/less-comments',[PostController::class, 'less_comments'])->name('post.less.comments');
+
+//User search
+
+Route::get('users',[UserController::class, 'index'])->name('user.index');
+Route::get('users/more-posts',[UserController::class, 'more_posts'])->name('user.more.posts');
+Route::get('users/bigger-portfolio',[UserController::class, 'bigger_portfolio'])->name('user.bigger.portfolio');
 require __DIR__ . '/auth.php';

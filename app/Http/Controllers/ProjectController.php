@@ -11,6 +11,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -19,30 +20,35 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('user_id','!=',Auth::user()->id)->where('expiration', '>' , Carbon::yesterday() )->paginate(10);
-        return view('projects.index', compact('projects'));
+        $projects = Project::where('user_id','!=',Auth::user()->id)->where('expiration', '>' , Carbon::yesterday() )->orderBy('created_at','DESC')->paginate(10);
+        $title = "Todos os Projetos";
+        return view('projects.index', compact('projects','title'));
     }
 
     public function user_projects($id){
         $projects = Project::where('user_id',$id)->paginate(10);
-        return view('projects.index', compact('projects'));
+        $title = "Seus projetos";
+        return view('projects.index', compact('projects','title'));
     }
 
     public function project_joined($id){
         $projects = Project::whereHas('candidates', function(Builder $query) use ($id){
             $query->where('user_id', $id);
         })->paginate(10);
-        return view('projects.index', compact('projects'));
+        $title = "Projetos inscritos";
+        return view('projects.index', compact('projects','title'));
     }
 
     public function most_popular(){
         $projects = Project::where('user_id','!=',Auth::user()->id)->where('expiration', '>' , Carbon::yesterday() )->withCount('candidates')->orderBy('candidates_count','DESC')->paginate(10);
-        return view('projects.index', compact('projects'));
+        $title = "Projetos mais concorridos";
+        return view('projects.index', compact('projects','title'));
     }
 
     public function less_popular(){
         $projects = Project::where('user_id','!=',Auth::user()->id)->where('expiration', '>' , Carbon::yesterday() )->withCount('candidates')->orderBy('candidates_count')->paginate(10);
-        return view('projects.index', compact('projects'));
+        $title = "Projetos menos concorridos";
+        return view('projects.index', compact('projects','title'));
     }
 
     public function search(Request $request){
@@ -50,7 +56,8 @@ class ProjectController extends Controller
         $projects = Project::where('user_id','!=',Auth::user()->id)->where('title' , 'LIKE' , "%{$request->search_bar}%")->orWhereHas('skills', function (Builder $query) use ($search){
             $query->where('name', 'LIKE', "%{$search}%");
         })->where('expiration', '>' , Carbon::yesterday() )->paginate(10);
-        return view('projects.index', compact('projects'));
+        $title = "Exibindo resultados para: ".$search;
+        return view('projects.index', compact('projects','title'));
     }
 
     /**
@@ -72,7 +79,7 @@ class ProjectController extends Controller
             'description' => ['required', 'max:2500', 'min:100'],
             'skills' => ['required'],
             'modality' => ['required'],
-            'expiration' => ['required','date','after:today'],
+            //'expiration' => ['required','date','after:today'],
             'slots' => ['required','numeric','min:1','max:100'],
             'user_id' => ['required',],
         ]);
@@ -113,24 +120,66 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit($id)
     {
-        return view('projects.edit');
+        $project = Project::find($id);
+        Gate::authorize('update',$project);
+        $skills = Skill::all();
+        $selectedSkills = $project->skills->pluck('id')->toArray();
+        return view('projects.edit', compact('project', 'skills', 'selectedSkills'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        $project = Project::find($id);
+        Gate::authorize('update',$project);
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'max:2500', 'min:100'],
+            'skills' => ['required'],
+            'modality' => ['required'],
+            'expiration' => ['required','date','after:today'],
+            'slots' => ['required','numeric','min:1','max:100'],
+        ]);
+
+        $project->title = $request->title;
+        $project->description = $request->description;
+        $project->modality = $request->modality;
+        $project->expiration = $request->expiration;
+        $project->slots = $request->slots;
+        $project->save();
+
+        $skills = $request->input('skills');
+        $selectedSkills = $project->skills->pluck('id')->toArray();
+        foreach ($skills as $s) {
+            if (!in_array($s, $selectedSkills)) {
+                LinkSkillProject::create([
+                    'project_id' => $project->id,
+                    'skill_id' => $s,
+                ]);
+            } else {
+                foreach ($project->skills as $ps) {
+                    if (!in_array($ps->id, $skills)) {
+                        $linkskill = LinkSkillProject::where('skill_id', $ps->id)->where('project_id', $project->id);
+                        $linkskill->delete();
+                    }
+                }
+            }
+        }
+        return redirect()->route('project.show',$project->id)->with('message','Projeto atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        Gate::authorize('destroy',$project);
+        $project->delete();
+        return redirect()->route('project.index')->with('message','Projeto excluido com sucesso!');
     }
 }

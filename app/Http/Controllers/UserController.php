@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+    public function index(){
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
+    }
+
+    public function more_posts(){
+        $users = User::withCount('posts')->orderBy('posts_count', 'DESC')->paginate(10);
+        return view('users.index', compact('users'));
+    }
+
+    public function bigger_portfolio(){
+        $users = User::withCount('portfolios')->orderBy('portfolios_count', 'DESC')->paginate(10);
+        return view('users.index', compact('users'));
+    }
+
     public function edit($id){
         $user = User::find($id);
         Gate::authorize('user_profile',$user);

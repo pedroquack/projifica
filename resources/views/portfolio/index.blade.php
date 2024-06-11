@@ -23,7 +23,7 @@
             <div class="flex flex-col gap-3">
                 @foreach ($user->portfolios as $p)
                     <div class="bg-white flex md:flex-row flex-col items-center p-6 gap-6">
-                        <div class="h-48 min-w-48  border-emerald-400 border-2">
+                        <div class="h-48 min-w-48 max-w-48  border-emerald-400 border-2">
                             <img class="h-full w-full object-cover" src="{{ asset($p->image) }}" alt="">
                         </div>
                         <div class="flex flex-col justify-around h-full gap-3">

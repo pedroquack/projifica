@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
+    <div class="flex flex-col items-center md:my-16 my-8 justify-center md:text-start text-center">
         <div class="md:w-3/4 w-4/5 flex flex-col gap-12">
             <x-profile_header>
                 <x-slot:user_name>{{ $user->name }}</x-slot:user_name>
@@ -39,10 +39,10 @@
                 </div>
                 <div class="relative md:col-span-2 col-span-3 md:p-12 p-6 bg-white flex flex-col gap-4 justify-between">
                     @can('user_profile', $user)
-                    <a href="{{ route('profile.edit', $user->id) }}"
-                        class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
-                        Editar Perfil
-                    </a>
+                        <a href="{{ route('profile.edit', $user->id) }}"
+                            class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
+                            Editar Perfil
+                        </a>
                     @endcan
                     <div class="flex flex-col gap-4">
                         <h1 class="font-bold text-xl">{{ $user->name }}</h1>
@@ -90,9 +90,10 @@
                                 <x-modal>
                                     <x-slot:button>
                                         Adicionar
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                          </svg>
+                                        </svg>
                                     </x-slot:button>
                                     <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar educação</h1>
                                     @livewire('education')
@@ -151,9 +152,10 @@
                                 <x-modal>
                                     <x-slot:button>
                                         Adicionar
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                          </svg>
+                                        </svg>
                                     </x-slot:button>
                                     <h1 class="font-bold md:text-2xl text-lg pb-5">Adicionar experiência</h1>
                                     @livewire('experience')
@@ -165,10 +167,12 @@
                                 <hr>
                             @endif
                             @foreach ($user->experiences as $e)
+                            <div>
                                 <div class="flex flex-col gap-1">
                                     <div class="flex md:flex-row flex-col md:justify-between md:items-center">
                                         <h1 class="text-lg font-bold">{{ $e->company }}</h1>
-                                        <div class="flex md:gap-5 gap-3 md:justify-start items-center justify-center relative">
+                                        <div
+                                            class="flex md:gap-5 gap-3 md:justify-start items-center justify-center relative">
                                             <span>{{ $e->start_date }} a {{ $e->end_date }}</span>
                                             @can('user_profile', $user)
                                                 <x-options_dropdown>
@@ -179,8 +183,7 @@
                                                         </button>
                                                         <div x-show="modal"
                                                             class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                                                            <div x-show="modal"
-                                                                class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
+                                                            <div x-show="modal" class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
                                                                 @click.away="modal = false"
                                                                 x-transition:enter="motion-safe:ease-out duration-300"
                                                                 x-transition:enter-start="opacity-0 scale-90"
@@ -191,27 +194,26 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <form action="{{ route('experience.destroy', $e->id) }}"
-                                                        method="post">
+                                                    <form action="{{ route('experience.destroy', $e->id) }}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
                                                             class="p-2 hover:bg-neutral-200 transition-all">Remover</a>
                                                     </form>
                                                 </x-options_dropdown>
-                                                </div>
                                             @endcan
                                         </div>
                                     </div>
-                                    <h2 class="text-base font-semibold">{{ $e->role }}</h2>
-                                    <p class="text-sm text-wrap break-words">{{ $e->description }}</p>
-                                    <hr>
                                 </div>
-                            @endforeach
+                                <h2 class="text-base font-semibold">{{ $e->role }}</h2>
+                                <p class="text-sm text-wrap break-words">{{ $e->description }}</p>
+                                <hr>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

@@ -1,4 +1,4 @@
-<nav class="sticky top-0 bg-neutral-700 py-2 md:px-6 px-2">
+<nav class="sticky top-0 bg-neutral-700 py-2 md:px-6 px-2 z-10">
     <div x-data="{mobileMenuIsOpen: false}" class="flex md:flex-row flex-col items-center justify-between md:gap-8 ">
         <div class="flex justify-between items-center w-full md:gap-10 gap-1">
             <div class="w-48">
@@ -83,9 +83,9 @@
 
                     <div x-cloak x-show="isOpen" x-transition @click.outside="isOpen = false"
                         class="absolute md:top-8 top-10 left-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md z-20">
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais antigos</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Mais recentes</a>
-                        <a href="{{route('home')}}" class="p-2 hover:bg-neutral-200">Maior portfólio</a>
+                        <a href="{{route('user.index')}}" class="p-2 hover:bg-neutral-200">Todos os usuários</a>
+                        <a href="{{route('user.more.posts')}}" class="p-2 hover:bg-neutral-200">Com mais postagens</a>
+                        <a href="{{route('user.bigger.portfolio')}}" class="p-2 hover:bg-neutral-200">Maior portfólio</a>
                     </div>
                 </div>
                 @auth
