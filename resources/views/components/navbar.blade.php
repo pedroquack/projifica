@@ -104,6 +104,9 @@
 
                         <div x-cloak x-show="isOpen" x-transition @click.outside="isOpen = false"
                             class="absolute md:top-8 top-10 right-0 flex w-full min-w-[12rem] flex-col overflow-hidden rounded-lg border border-neutral-100 bg-white shadow-md z-20">
+                            @can('admin', Auth::user())
+                                <a href="{{ route('admin.dashboard') }}" class="p-2 hover:bg-neutral-200">Painel de admin</a>
+                            @endcan
                             <a href="{{route('profile.index',[Auth::user()->name,Auth::user()->id])}}" class="p-2 hover:bg-neutral-200">Meu perfil</a>
                             <form action="{{route('logout')}}" method="post" enctype="multipart/form-data">
                                 @csrf

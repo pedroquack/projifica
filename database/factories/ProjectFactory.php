@@ -30,6 +30,7 @@ class ProjectFactory extends Factory
             'modality' => $modalities[rand(0,2)],
             'expiration' => fake()->dateTimeBetween($startDate = 'now',$endDate = "+2 years",$timezone = null),
             'slots' => random_int(1,100),
+            'created_at' => fake()->dateTimeThisDecade($max='now'),
             'user_id' => User::factory(),
         ];
     }

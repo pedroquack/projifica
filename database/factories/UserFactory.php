@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'image' => fake()->imageUrl(),
             'description' => fake()->realText(),
             'password' => static::$password ??= Hash::make('password'),
+            'created_at' => fake()->dateTimeThisDecade($max = 'now'),
             'remember_token' => Str::random(10),
         ];
     }

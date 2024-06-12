@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'pedrovolpattocosta@gmail.com',
             'password' => bcrypt('coxinha123'),
             'description' => fake()->realText(),
+            'role' => 'adm',
             'phone' => '(41) 99742-1004',
             'image' => fake()->imageUrl(),
         ]);

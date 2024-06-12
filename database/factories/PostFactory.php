@@ -28,6 +28,7 @@ class PostFactory extends Factory
             'body' => fake()->paragraph(),
             'image' => $image,
             'user_id' => random_int(1,100),
+            'created_at' => fake()->dateTimeThisDecade($max='now'),
         ];
     }
 }

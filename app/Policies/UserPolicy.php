@@ -20,4 +20,8 @@ class UserPolicy
         return $user->id === $profile->id;
     }
 
+    public function admin(User $user){
+        return $user->role === 'adm';
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
@@ -10,12 +11,14 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('project.index');
     }
     return view('home.home');
 })->name('home');
+
 
 Route::middleware('auth')->group(function () {
     //User profile
@@ -44,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/most-popular', [ProjectController::class, 'most_popular'])->name('project.popular');
     Route::get('projects/less-popular', [ProjectController::class, 'less_popular'])->name('project.unpopular');
     Route::get('projects/search', [ProjectController::class, 'search'])->name('project.search');
+
+    Route::middleware('isAdmin')->group(function (){
+        Route::get('dashboard', [AdminController::class ,'dashboard'])->name('admin.dashboard');
+    });
 });
 //Profile
 Route::get('profile/{username}-{userid}', [ProfileController::class, 'index'])->name('profile.index');
