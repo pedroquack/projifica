@@ -18,7 +18,7 @@ return new class extends Migration
             $table->year('end_date');
             $table->string('role');
             $table->text('description');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

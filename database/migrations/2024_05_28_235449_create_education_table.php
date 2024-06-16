@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('course');
             $table->year('start_date');
             $table->year('end_date');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
