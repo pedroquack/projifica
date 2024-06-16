@@ -49,7 +49,14 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/search', [ProjectController::class, 'search'])->name('project.search');
 
     Route::middleware('isAdmin')->group(function (){
-        Route::get('dashboard', [AdminController::class ,'dashboard'])->name('admin.dashboard');
+        Route::get('dashboard/chart', [AdminController::class ,'dashboard'])->name('admin.dashboard');
+        Route::get('dashboard/users', [AdminController::class ,'users'])->name('admin.users');
+        Route::get('dashboard/projects', [AdminController::class ,'projects'])->name('admin.projects');
+        Route::get('dashboard/posts', [AdminController::class ,'posts'])->name('admin.posts');
+        Route::get('dashboard/reports', [AdminController::class ,'reports'])->name('admin.reports');
+        Route::get('dashboard/user/{id}', [AdminController::class ,'user_destroy'])->name('admin.user.destroy');
+        Route::get('dashboard/project/{id}', [AdminController::class ,'project_destroy'])->name('admin.project.destroy');
+        Route::get('dashboard/post/{id}', [AdminController::class ,'post_destroy'])->name('admin.post.destroy');
     });
 });
 //Profile
