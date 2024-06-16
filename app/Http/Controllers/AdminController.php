@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function dashboard(){
-        $projects = Project::all()->count();
-        $users = User::all()->count();
-        $posts = Post::all()->count();
+        $users = User::all();
+        $projects = Project::all();
+        $posts = Post::all();
 
         $dataUsers = User::select([
             DB::raw('YEAR(created_at) as year'),
@@ -55,6 +55,39 @@ class AdminController extends Controller
         $projectsTotal = implode(',', $totalProject);
         $projectsYear = implode(',', $yearProject);
 
-        return view('admin.dashboard', compact('users','projects','posts','userYear','userTotal','postsTotal','postsYear','projectsTotal','projectsYear'));
+        return view('admin.chart', compact('users','projects','posts','userYear','userTotal','postsYear','postsTotal','projectsYear','projectsTotal'));
+    }
+
+    public function users(){
+        $users = User::all()->count();
+        return view('admin.users',compact('users'));
+    }
+
+    public function user_destroy($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back()->with('message','Usuário excluído com sucesso!');
+    }
+
+    public function projects(){
+        $projects = Project::all()->count();
+        return view('admin.projects',compact('projects'));
+    }
+
+    public function project_destroy($id){
+        $project = Project::find($id);
+        $project->delete();
+        return redirect()->back()->with('message','Projeto excluído com sucesso!');
+    }
+
+    public function posts(){
+        $posts = Post::all()->count();
+        return view('admin.posts',compact('posts'));
+    }
+
+    public function post_destroy($id){
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->back()->with('message','Postagem excluída com sucesso!');
     }
 }
