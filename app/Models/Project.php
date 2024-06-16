@@ -18,6 +18,8 @@ class Project extends Model
         'user_id',
     ];
 
+    protected $casts = ['expiration' => 'date'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
