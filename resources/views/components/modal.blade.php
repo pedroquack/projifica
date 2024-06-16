@@ -1,11 +1,11 @@
-@props(['width' => 'w-full','border' => ''])
+@props(['width' => 'w-full','border' => '','color' => 'bg-emerald-400 hover:bg-emerald-500'])
 
 <div x-data="{ modal: false }" class="{{ $width }}">
     <button type="button" @click="modal = !modal"
-        class="bg-emerald-400 hover:bg-emerald-500 transition-all {{ $border }} px-5 py-1 gap-4 text-base font-base w-full flex justify-center items-center">
+        class="{{ $color }} transition-all {{ $border }} px-5 py-1 gap-4 text-base font-base w-full flex justify-center items-center">
         {{ $button }}
     </button>
-    <div x-show="modal"
+    <div x-cloak x-show="modal"
         class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
         <div x-show="modal" class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg relative"
             @click.away="modal = false" x-transition:enter="motion-safe:ease-out duration-300"
