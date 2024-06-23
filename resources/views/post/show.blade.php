@@ -91,6 +91,7 @@
                                 Postado {{ $c->created_at->format('d/m/Y') }} ás
                                 {{ $c->created_at->format('H:i') }}
                             </small>
+                            @auth
                             <x-options_dropdown>
                                 @can('user_comment',$c)
                                 <form action="{{ route('comment.destroy', $c->id) }}" method="post">
@@ -118,6 +119,7 @@
                                 </x-modal>
                                 @endcan
                             </x-options_dropdown>
+                            @endauth
                         </div>
                     </div>
                     <p class="text-sm break-word break-words">{{ $c->body }}</p>

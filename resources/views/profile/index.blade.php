@@ -38,6 +38,7 @@
                     </div>
                 </div>
                 <div class="relative md:col-span-2 col-span-3 md:p-12 p-6 bg-white flex flex-col gap-4 justify-between">
+                    @auth
                     @can('user_profile', $user)
                         <a href="{{ route('profile.edit', $user->id) }}"
                             class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
@@ -62,6 +63,7 @@
                         </x-modal>
                     </div>
                     @endcan
+                    @endauth
                     <div class="flex flex-col gap-4">
                         <h1 class="font-bold text-xl">{{ $user->name }}</h1>
                         <p class="text-base text-wrap break-words">{{ $user->description }}</p>
