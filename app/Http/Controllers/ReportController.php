@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Notification;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 class ReportController extends Controller
 {
@@ -26,13 +29,23 @@ class ReportController extends Controller
         }
 
         if($target){
-            $target->reports()->create([
+            $report = $target->reports()->create([
                 'user_id' =>$request->user_id,
-                'reason' => $request->reason,
             ]);
 
-            foreach(User::where('role','adm') as $adm){
+            $notification = [
+                'subject' => 'Notificação: Alguem fez uma denúncia',
+                'title' => 'Alguem acabou de fazer uma denúncia!',
+                'message' => 'O usuário ' . $report->user->name . ' fez uma denúncia! Que tal conferir?'
+            ];
 
+            foreach(User::where('role','adm')->get() as $adm){
+                try {
+                    Mail::to($adm->email)->queue(new Notification($notification));
+                } catch(Throwable $error){
+                    report($error);
+                    abort(500, 'Erro ao notificar');
+                };
             }
         }
 
