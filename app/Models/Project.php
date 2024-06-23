@@ -32,5 +32,8 @@ class Project extends Model
         return $this->hasMany(LinkUserProject::class);
     }
 
+    public function reports(){
+        return $this->morphMany(Report::class,'target');
+    }
 
 }

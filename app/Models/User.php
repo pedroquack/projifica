@@ -61,4 +61,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class,'link_user_projects');
     }
 
+    public function reports(){
+        return $this->morphMany(Report::class,'target');
+    }
+
 }

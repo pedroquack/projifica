@@ -21,4 +21,8 @@ class Comment extends Model
     public function post(){
         return $this->belongsTo(Post::class);
     }
+
+    public function reports(){
+        return $this->morphMany(Report::class,'target');
+    }
 }
