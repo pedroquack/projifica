@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="bg-neutral-600">
-    <ul class="flex justify-around text-white">
+    <ul class="flex md:flex-row flex-col justify-around text-white">
         <x-dashboard-navitem :route="'admin.dashboard'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                 <path fill-rule="evenodd"
