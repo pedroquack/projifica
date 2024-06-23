@@ -8,6 +8,7 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/less-popular', [ProjectController::class, 'less_popular'])->name('project.unpopular');
     Route::get('projects/search', [ProjectController::class, 'search'])->name('project.search');
 
+    //Report
+    Route::post('report/{type}', [ReportController::class, 'store'])->name('report.store');
+
     Route::middleware('isAdmin')->group(function (){
         Route::get('dashboard/chart', [AdminController::class ,'dashboard'])->name('admin.dashboard');
         Route::get('dashboard/users', [AdminController::class ,'users'])->name('admin.users');
@@ -57,6 +61,8 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard/user/{id}', [AdminController::class ,'user_destroy'])->name('admin.user.destroy');
         Route::get('dashboard/project/{id}', [AdminController::class ,'project_destroy'])->name('admin.project.destroy');
         Route::get('dashboard/post/{id}', [AdminController::class ,'post_destroy'])->name('admin.post.destroy');
+        Route::get('dashboard/comment/{id}', [AdminController::class ,'comment_destroy'])->name('admin.comment.destroy');
+
     });
 });
 //Profile
