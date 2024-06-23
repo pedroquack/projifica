@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\LinkUserProject;
 use App\Models\Post;
 use App\Models\Project;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -89,5 +91,16 @@ class AdminController extends Controller
         $post = Post::find($id);
         $post->delete();
         return redirect()->back()->with('message','Postagem excluída com sucesso!');
+    }
+
+    public function comment_destroy($id){
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect()->back()->with('message','Comentário excluído com sucesso!');
+    }
+
+    public function reports(){
+        $reports = Report::all()->count();
+        return view('admin.reports',compact('reports'));
     }
 }
