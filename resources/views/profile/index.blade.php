@@ -43,6 +43,24 @@
                             class="md:absolute md:top-3 md:right-3 bg-emerald-400 hover:bg-emerald-500 transition-all p-1 drop-shadow-md">
                             Editar Perfil
                         </a>
+                    @else
+                    <div class="md:absolute md:top-3 md:right-3">
+                        <x-modal color="bg-white hover:bg-neutral-100">
+                            <x-slot:button>
+                                Denunciar
+                            </x-slot:button>
+                            <div class="text-center">
+                                <h1 class="font-bold text-lg mb-3">Fazer uma denúncia</h1>
+                                <form action="{{ route('report.store','user') }}" method="post"
+                                    class="flex flex-col gap-3">
+                                    @csrf
+                                    <input type="hidden" name="target_id" value="{{ $user->id }}">
+                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <button type="submit" class="bg-red-400 hover:bg-red-500 p-2">Denunciar</button>
+                                </form>
+                            </div>
+                        </x-modal>
+                    </div>
                     @endcan
                     <div class="flex flex-col gap-4">
                         <h1 class="font-bold text-xl">{{ $user->name }}</h1>
