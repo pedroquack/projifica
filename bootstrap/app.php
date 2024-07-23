@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\alreadyReported;
 use App\Http\Middleware\isAdmin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

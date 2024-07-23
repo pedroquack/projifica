@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Project;
+use App\Models\Report;
 use App\Models\User;
 
 class ProjectPolicy
@@ -29,5 +30,9 @@ class ProjectPolicy
     }
     public function destroy(User $user, Project $project){
         return $user->id === $project->user->id;
+    }
+    public function project_already_reported(User $user, Project $project){
+        $report = Report::where('user_id', $user->id)->where('target_id', $project->id)->get()->count();
+        return $report === 0;
     }
 }

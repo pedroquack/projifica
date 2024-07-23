@@ -7,7 +7,9 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
 
@@ -21,11 +23,11 @@ class ReportController extends Controller
         ]);
 
         switch($type){
-            case "post": $target = Post::find($request->target_id); break;
-            case "project": $target = Project::find($request->target_id); break;
-            case "user": $target = User::find($request->target_id); break;
-            case "comment": $target = Comment::find($request->target_id); break;
-            default: abort(500);
+            case "post": $target = Post::find($request->target_id); Gate::authorize('post_already_reported',$target); break;
+            case "project": $target = Project::find($request->target_id); Gate::authorize('project_already_reported',$target); break;
+            case "user": $target = User::find($request->target_id); Gate::authorize('user_already_reported',$target); break;
+            case "comment": $target = Comment::find($request->target_id); Gate::authorize('comment_already_reported',$target);  break;
+            default: return abort(403);
         }
 
         if($target){
@@ -48,7 +50,6 @@ class ReportController extends Controller
                 };
             }
         }
-
         return redirect()->back()->with('message','Denúncia enviada!');
     }
 

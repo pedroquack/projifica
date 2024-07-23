@@ -4,11 +4,12 @@ namespace App\Providers;
 
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\Report;
 use App\Models\User;
 use App\Policies\EducationPolicy;
 use App\Policies\ExperiencePolicy;
+use App\Policies\ReportPolicy;
 use App\Policies\UserPolicy;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
