@@ -66,7 +66,7 @@
                         <label for="expiration">Aberto para inscrições até:</label>
                         <input type="date" id="expiration" name="expiration"
                             class="rounded-lg border-neutral-400 @if ($errors->has('expiration')) input-error @endif"
-                            value="{{ $project->expiration }}">
+                            value="{{ $project->expiration->format('Y-m-d') }}">
                         @if ($errors->has('expiration'))
                             <span class="invalid-feedback">
                                 <p>{{ $errors->first('expiration') }}</p>

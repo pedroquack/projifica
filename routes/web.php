@@ -9,8 +9,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', function () {
@@ -62,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard/project/{id}', [AdminController::class ,'project_destroy'])->name('admin.project.destroy');
         Route::get('dashboard/post/{id}', [AdminController::class ,'post_destroy'])->name('admin.post.destroy');
         Route::get('dashboard/comment/{id}', [AdminController::class ,'comment_destroy'])->name('admin.comment.destroy');
+        Route::get('dashboard/skills/', [SkillController::class ,'index'])->name('admin.skills');
+        Route::delete('dashboard/skills/{id}', [SkillController::class ,'destroy'])->name('admin.skills.destroy');
 
     });
 });
