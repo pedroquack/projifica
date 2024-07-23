@@ -141,12 +141,6 @@ return [
     'uuid' => 'O campo :attribute deve ser um UUID válido.',
 
 
-        // or whatever fields you wanna translate
-        'date' => [
-            // or tomorrow
-            'today' => 'hoje'
-        ],
-
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -223,6 +217,15 @@ return [
         'birth_date' => 'data de nascimento',
         'skills' => 'habilidades',
         'slots' => 'vagas',
+        'expiration' => 'expiração',
+    ],
+
+    'values' => [
+        'date' => [
+            // or tomorrow
+            'today.' => 'hoje',
+            'now' => 'agora'
+        ],
     ],
 
 ];

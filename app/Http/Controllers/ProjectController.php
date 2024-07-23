@@ -79,9 +79,11 @@ class ProjectController extends Controller
             'description' => ['required', 'max:2500', 'min:100'],
             'skills' => ['required'],
             'modality' => ['required'],
-            //'expiration' => ['required','date','after:today'],
+            'expiration' => ['required','date','after:today'],
             'slots' => ['required','numeric','min:1','max:100'],
             'user_id' => ['required',],
+        ],[
+             'expiration.after' => 'A data de expiração deve ser uma data posterior ao dia de hoje'
         ]);
 
         $project = Project::create([
@@ -143,6 +145,8 @@ class ProjectController extends Controller
             'modality' => ['required'],
             'expiration' => ['required','date','after:today'],
             'slots' => ['required','numeric','min:1','max:100'],
+        ], [
+            'expiration.after' => 'A data de expiração deve ser uma data posterior ao dia de hoje'
         ]);
 
         $project->title = $request->title;
