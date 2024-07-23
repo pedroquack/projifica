@@ -16,7 +16,8 @@ use function PHPUnit\Framework\isEmpty;
 
 class AdminController extends Controller
 {
-    public function dashboard(){
+    public function dashboard()
+    {
         $users = User::all();
         $projects = Project::all();
         $posts = Post::all();
@@ -36,74 +37,97 @@ class AdminController extends Controller
             DB::raw('COUNT(*) as total'),
         ])->groupBy('year')->orderBy('year')->get();
 
-        foreach($dataUsers as $u){
+        foreach ($dataUsers as $u) {
             $year[] = $u->year;
             $total[] = $u->total;
         }
+        if (isset($total)) {
+            $userYear = implode(',', $year);
+            $userTotal = implode(',', $total);
+        }else{
+            $userYear = [];
+            $userTotal = '';
+        }
 
-        $userYear = implode(',', $year);
-        $userTotal = implode(',',$total);
-
-        foreach($dataPosts as $p){
+        foreach ($dataPosts as $p) {
             $totalPost[] = $p->total;
             $yearPost[] = $p->year;
         }
 
-        $postsTotal = implode(',', $totalPost);
-        $postsYear = implode(',', $yearPost);
+        if (isset($totalPost)) {
+            $postsTotal = implode(',', $totalPost);
+            $postsYear = implode(',', $yearPost);
+        }else{
+            $postsTotal = '';
+            $postsYear = '';
+        }
 
-        foreach($dataProjects as $p){
+        foreach ($dataProjects as $p) {
             $totalProject[] = $p->total;
             $yearProject[] = $p->year;
         }
 
-        $projectsTotal = implode(',', $totalProject);
-        $projectsYear = implode(',', $yearProject);
+        if (isset($totalProject)) {
+            $projectsTotal = implode(',', $totalProject);
+            $projectsYear = implode(',', $yearProject);
+        }else{
+            $projectsTotal = '';
+            $projectsYear = '';
+        }
 
-        return view('admin.chart', compact('users','projects','posts','userYear','userTotal','postsYear','postsTotal','projectsYear','projectsTotal'));
+
+        return view('admin.chart', compact('users', 'projects', 'posts', 'userYear', 'userTotal', 'postsYear', 'postsTotal', 'projectsYear', 'projectsTotal'));
     }
 
-    public function users(){
+    public function users()
+    {
         $users = User::all()->count();
-        return view('admin.users',compact('users'));
+        return view('admin.users', compact('users'));
     }
 
-    public function user_destroy($id){
+    public function user_destroy($id)
+    {
         $user = User::find($id);
         $user->delete();
-        return redirect()->back()->with('message','Usuário excluído com sucesso!');
+        return redirect()->back()->with('message', 'Usuário excluído com sucesso!');
     }
 
-    public function projects(){
+    public function projects()
+    {
         $projects = Project::all()->count();
-        return view('admin.projects',compact('projects'));
+        return view('admin.projects', compact('projects'));
     }
 
-    public function project_destroy($id){
+    public function project_destroy($id)
+    {
         $project = Project::find($id);
         $project->delete();
-        return redirect()->back()->with('message','Projeto excluído com sucesso!');
+        return redirect()->back()->with('message', 'Projeto excluído com sucesso!');
     }
 
-    public function posts(){
+    public function posts()
+    {
         $posts = Post::all()->count();
-        return view('admin.posts',compact('posts'));
+        return view('admin.posts', compact('posts'));
     }
 
-    public function post_destroy($id){
+    public function post_destroy($id)
+    {
         $post = Post::find($id);
         $post->delete();
-        return redirect()->back()->with('message','Postagem excluída com sucesso!');
+        return redirect()->back()->with('message', 'Postagem excluída com sucesso!');
     }
 
-    public function comment_destroy($id){
+    public function comment_destroy($id)
+    {
         $comment = Comment::find($id);
         $comment->delete();
-        return redirect()->back()->with('message','Comentário excluído com sucesso!');
+        return redirect()->back()->with('message', 'Comentário excluído com sucesso!');
     }
 
-    public function reports(){
+    public function reports()
+    {
         $reports = Report::all()->count();
-        return view('admin.reports',compact('reports'));
+        return view('admin.reports', compact('reports'));
     }
 }
