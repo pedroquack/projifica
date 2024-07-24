@@ -7,7 +7,7 @@
         }
     </style>
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
-        <div class="bg-white flex flex-col gap-3 md:w-3/4 w-4/5 p-6">
+        <div class="bg-white flex flex-col gap-3 md:w-3/4 w-11/12 p-6">
             <h1 class="font-bold text-xl">Adicionar item ao portfólio</h1>
             <form action="{{ route('portfolio.update', $portfolio->id) }}" method="post" class="flex flex-col gap-3"
                 enctype="multipart/form-data">

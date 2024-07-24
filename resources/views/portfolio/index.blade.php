@@ -2,7 +2,7 @@
 @section('content')
     <x-session_message />
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
-        <div class="md:w-3/4 w-4/5 flex flex-col gap-6">
+        <div class="md:w-3/4 w-11/12 flex flex-col gap-6">
             <x-profile_header>
                 <x-slot:user_name>{{ $user->name }}</x-slot:user_name>
                 <x-slot:user_id>{{ $user->id }}</x-slot:user_id>

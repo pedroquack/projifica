@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-col items-center md:my-16 my-8 justify-center md:text-start text-center">
-        <div class="md:w-3/4 w-4/5 flex flex-col gap-12">
+        <div class="md:w-3/4 w-11/12 flex flex-col gap-12">
             <x-profile_header>
                 <x-slot:user_name>{{ $user->name }}</x-slot:user_name>
                 <x-slot:user_id>{{ $user->id }}</x-slot:user_id>
@@ -207,7 +207,7 @@
                                                         </button>
                                                         <div x-show="modal"
                                                             class="fixed top-0 left-0 z-40 w-full h-full flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                                                            <div x-show="modal" class="md:w-1/2 w-3/4 bg-white p-8 rounded-lg"
+                                                            <div x-show="modal" class="md:w-1/2 w-11/12 bg-white p-8 rounded-lg"
                                                                 @click.away="modal = false"
                                                                 x-transition:enter="motion-safe:ease-out duration-300"
                                                                 x-transition:enter-start="opacity-0 scale-90"

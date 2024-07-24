@@ -2,7 +2,7 @@
 @section('content')
 <x-session_message />
 <div class="flex justify-center my-12">
-    <div class="bg-white grid grid-cols-4 p-6 md:w-4/5 w-4/5">
+    <div class="bg-white grid grid-cols-4 p-6 md:w-4/5 w-11/12">
         <div class="md:col-span-3 col-span-4 flex flex-col gap-4">
             <div class="md:pr-5 flex flex-col gap-3">
                 <div class="flex md:flex-row flex-col justify-between md:items-center items-start">
