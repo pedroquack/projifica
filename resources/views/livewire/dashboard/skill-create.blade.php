@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
     <x-modal width="w-full" color="bg-emerald-400 hover:bg-emerald-500">
         <x-slot:button>
             Adicionar Habilidade
