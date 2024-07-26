@@ -11,7 +11,7 @@ class SkillCreate extends Component
     public $name;
 
     protected $rules = [
-        'name' => 'required|max:96',
+        'name' => 'required|max:96|unique:skills',
     ];
 
     public function store(){
