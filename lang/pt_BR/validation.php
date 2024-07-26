@@ -222,6 +222,8 @@ return [
         'course' => 'curso',
         'start_date' => 'inicio do curso',
         'end_date' => 'fim do curso',
+        'company' => 'empresa / projeto',
+        'role' => 'cargo',
     ],
 
     'values' => [
