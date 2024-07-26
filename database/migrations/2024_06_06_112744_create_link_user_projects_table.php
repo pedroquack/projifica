@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->text('proposal')->nullable();
-            $table->boolean('approved')->default(0);
             $table->timestamps();
         });
     }
