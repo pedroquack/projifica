@@ -14,20 +14,35 @@ class Experience extends Component
     public int $end_date;
     public string $description;
 
-    protected $rules = [
-        'company' => ['required', 'min:8', 'max:96'],
-        'role' => ['required', 'min:8', 'max:128'],
-        'description' => ['required', 'min:32', 'max:500'],
-        'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
-        'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
-    ];
+    protected function rules()
+    {
+        $end_date_validation = "";
+        $start_date_validation = "";
+
+        if(isset($this->start_date)){
+            $start_date_validation = 'lte:'. $this->end_date;
+        }
+
+        if(isset($this->end_date)){
+            $end_date_validation = 'gte:' . $this->start_date;
+        }
+
+        return [
+            'company' => ['required', 'min:8', 'max:96'],
+            'role' => ['required', 'min:8', 'max:128'],
+            'description' => ['required', 'min:32', 'max:500'],
+            'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100',$start_date_validation],
+            'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100',$end_date_validation],
+        ];
+    }
 
     public function render()
     {
         return view('livewire.experience');
     }
 
-    public function store(){
+    public function store()
+    {
         $this->validate();
 
         $experience = ModelsExperience::create([
@@ -40,7 +55,5 @@ class Experience extends Component
         ]);
 
         return redirect()->route('profile.index', [$experience->user->name, $experience->user->id]);
-
     }
-
 }

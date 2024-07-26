@@ -218,6 +218,10 @@ return [
         'skills' => 'habilidades',
         'slots' => 'vagas',
         'expiration' => 'expiração',
+        'school' => 'instituição de ensino',
+        'course' => 'curso',
+        'start_date' => 'inicio do curso',
+        'end_date' => 'fim do curso',
     ],
 
     'values' => [

@@ -14,12 +14,26 @@ class Education extends Component
     public int $start_date;
     public int $end_date;
 
-    protected $rules = [
-        'school' => ['required', 'min:8', 'max:96'],
-        'course' => ['required', 'min:8', 'max:128'],
-        'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
-        'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
-    ];
+    protected function rules()
+    {
+        $end_date_validation = "";
+        $start_date_validation = "";
+
+        if(isset($this->start_date)){
+            $start_date_validation = 'lte:'. $this->end_date;
+        }
+
+        if(isset($this->end_date)){
+            $end_date_validation = 'gte:' . $this->start_date;
+        }
+
+        return [
+            'school' => ['required', 'min:8', 'max:96'],
+            'course' => ['required', 'min:8', 'max:128'],
+            'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100', $start_date_validation],
+            'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100', $end_date_validation],
+        ];
+    }
 
     public function render()
     {
@@ -28,7 +42,7 @@ class Education extends Component
 
     public function store()
     {
-        $this->validate();
+        $this->validate($this->rules());
 
         $education = ModelsEducation::create([
             'school' => $this->school,
