@@ -224,6 +224,7 @@ return [
         'end_date' => 'fim do curso',
         'company' => 'empresa / projeto',
         'role' => 'cargo',
+        'image' => 'imagem',
     ],
 
     'values' => [
