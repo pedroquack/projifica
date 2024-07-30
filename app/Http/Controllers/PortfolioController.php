@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Gate;
 
 class PortfolioController extends Controller
 {
-    public function index($name, $id)
+    public function index($id)
     {
         $user = User::find($id);
 
@@ -59,7 +59,7 @@ class PortfolioController extends Controller
                 'skill_id' => $s,
             ]);
         }
-        return redirect()->route('portfolio.index', [$portfolio->user->name, $portfolio->user->id]);
+        return redirect()->route('portfolio.index', $portfolio->user->id);
     }
 
     public function edit(Request $request, $id)
@@ -118,7 +118,7 @@ class PortfolioController extends Controller
                 }
             }
         }
-        return redirect()->route('portfolio.index', [$portfolio->user->name, $portfolio->user->id]);
+        return redirect()->route('portfolio.index', $portfolio->user->id);
     }
 
     public function destroy($id){

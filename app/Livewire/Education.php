@@ -52,6 +52,6 @@ class Education extends Component
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('profile.index', [$education->user->name, $education->user->id]);
+        return redirect()->route('profile.index', $education->user->id);
     }
 }

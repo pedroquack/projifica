@@ -6,7 +6,7 @@
             {{ $users->links() }}
             <div class="flex flex-col gap-3">
                 @foreach ($users as $u)
-                    <a href="{{ route('profile.index', [$u->name, $u->id]) }}" class="bg-white hover:bg-neutral-100 flex md:flex-row flex-col items-center p-6 gap-6">
+                    <a href="{{ route('profile.index', $u->id) }}" class="bg-white hover:bg-neutral-100 flex md:flex-row flex-col items-center p-6 gap-6">
                         <div class="h-48 min-w-48  border-emerald-400 border-2">
                             <img class="h-full w-full object-cover" src="{{ asset($u->image) }}" alt="">
                         </div>

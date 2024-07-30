@@ -20,7 +20,7 @@
                 <td class="border">{{ $u->phone }}</td>
                 <td class="border">{{ $u->role }}</td>
                 <td class="border flex gap-1 w-full">
-                    <a href="{{ route('profile.index',[$u->name,$u->id]) }}"
+                    <a href="{{ route('profile.index',$u->id) }}"
                         class="bg-emerald-400 hover:bg-emerald-500 transition-all py-1 px-3 w-full text-center">Ver
                         perfil</a>
                     <x-modal width="w-full" color="bg-red-400 hover:bg-red-500">

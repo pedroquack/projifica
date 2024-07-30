@@ -73,7 +73,7 @@
                 <span>{{ $project->user->projects->count() }} projetos postados</span>
                 <span>Membro desde {{ $project->user->created_at->format('Y') }}</span>
             </div>
-            <a href="{{ route('profile.index', [$project->user->name, $project->user->id]) }}"
+            <a href="{{ route('profile.index', $project->user->id) }}"
                 class="flex w-full justify-center bg-emerald-400 hover:bg-emerald-500 transition-all shadow-md shadow-neutral-500 py-1">
                 Ver perfil
             </a>

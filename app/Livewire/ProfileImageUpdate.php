@@ -36,6 +36,6 @@ class ProfileImageUpdate extends Component
 
         $user->save();
 
-        return redirect()->route('profile.index', [$user->name, $user->id])->with('message','Foto de perfil atualizada com sucesso');
+        return redirect()->route('profile.index', $user->id)->with('message','Foto de perfil atualizada com sucesso');
     }
 }

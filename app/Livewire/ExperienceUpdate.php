@@ -46,6 +46,6 @@ class ExperienceUpdate extends Component
             'end_date' => $this->end_date,
         ]);
 
-        return redirect()->route('profile.index', [$this->e->user->name, $this->e->user->id])->with('message','Experiência atualizada com sucesso');
+        return redirect()->route('profile.index', $this->e->user->id)->with('message','Experiência atualizada com sucesso');
     }
 }

@@ -5,7 +5,7 @@
     <hr>
     @foreach ($project->candidates as $c)
         <a x-data="{ hover: false }" @mouseover="hover = true" @mouseout="hover = false"
-            href="{{ route('profile.index', [$c->user->name, $c->user->id]) }}"
+            href="{{ route('profile.index', $c->user->id) }}"
             class="flex justify-between pr-4 items-center hover:bg-neutral-100 rounded-full">
             <div class="flex items-center gap-3">
                 <img src="{{ asset($c->user->image) }}" alt=""

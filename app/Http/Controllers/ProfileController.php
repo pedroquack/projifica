@@ -16,11 +16,9 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
 
-    public function index($name,$id){
+    public function index($id){
         $user = User::find($id);
-        //$educations = Education::where('user_id', $id)->get();
-        //$experiences = Experience::where('user_id', $id)->get();
-        return view('profile.index',compact('user'));
+        return view('profile.index', compact('user'));
     }
 
     public function edit(Request $request): View

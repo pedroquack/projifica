@@ -70,11 +70,11 @@ Route::middleware('auth')->group(function () {
     });
 });
 //Profile
-Route::get('profile/{username}-{userid}', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('profile/{userid}', [ProfileController::class, 'index'])->name('profile.index');
 //Portfolio
-Route::get('portfolio/{username}-{userid}', [PortfolioController::class, 'index'])->name('portfolio.index');
+Route::get('portfolio/{userid}', [PortfolioController::class, 'index'])->name('portfolio.index');
 //Post
-Route::get('posts/{username}/{userid}',[PostController::class, 'user_index'])->name('post.user.index');
+Route::get('posts/{userid}',[PostController::class, 'user_index'])->name('post.user.index');
 Route::get('post/{id}',[PostController::class, 'show'])->name('post.show');
 Route::get('posts',[PostController::class, 'index'])->name('post.index');
 Route::get('posts/oldest',[PostController::class, 'oldest'])->name('post.oldest');

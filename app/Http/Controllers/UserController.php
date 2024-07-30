@@ -45,6 +45,6 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('profile.index',[$user->name,$user->id]);
+        return redirect()->route('profile.index',$user->id);
     }
 }

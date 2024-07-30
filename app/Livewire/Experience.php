@@ -54,6 +54,6 @@ class Experience extends Component
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('profile.index', [$experience->user->name, $experience->user->id]);
+        return redirect()->route('profile.index',$experience->user->id);
     }
 }
