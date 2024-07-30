@@ -225,6 +225,7 @@ return [
         'company' => 'empresa / projeto',
         'role' => 'cargo',
         'image' => 'imagem',
+        'proposal' => 'proposta',
     ],
 
     'values' => [
