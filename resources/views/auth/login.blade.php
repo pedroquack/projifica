@@ -14,6 +14,14 @@
                 @csrf
                 <x-input :class="''" :id="'email'" :label="'E-Mail'" :type="'email'" :name="'email'" :placeholder="'exemplo@gmail.com'"/>
                 <x-input :class="''" :id="'password'" :label="'Senha'" :type="'password'" :name="'password'" :placeholder="'***********'"/>
+                <div class="flex flex-row items-center gap-2">
+                    <input type="checkbox" class="cursor-pointer checked:bg-emerald-400 hover:bg-emerald-400 focus:bg-emerald-400 focus:outline-emerald-400" name="remember" id="remember">
+                    <label for="remember">
+                        Lembrar de mim
+                    </label>
+
+                </div>
+
                 <button type="submit"
                     class="bg-emerald-400 p-3 w-full text-center text-neutral-800 font-bold hover:bg-emerald-600 transition ease-linear rounded-xl">
                     Entrar

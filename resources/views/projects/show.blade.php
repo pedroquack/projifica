@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .project-desc a{
+        text-decoration: underline;
+        color: rgb(0, 145, 255)
+    }
+</style>
 <x-session_message />
 <div class="flex justify-center my-12">
     <div class="bg-white grid grid-cols-4 p-6 md:w-4/5 w-11/12">
@@ -60,7 +66,7 @@
         <hr>
         <div class="border-b md:border-b-0 md:pb-0 pb-4">
             <h2 class="font-bold">Descrição do projeto</h2>
-            <div class="md:w-3/4 w-full break-words">
+            <div class="project-desc md:w-3/4 w-full break-words">
                 {!! $project->description !!}
             </div>
         </div>
