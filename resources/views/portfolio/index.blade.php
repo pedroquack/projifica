@@ -8,7 +8,7 @@
                 <x-slot:user_id>{{ $user->id }}</x-slot:user_id>
             </x-profile_header>
             <div class="md:relative bg-white flex flex-col justify-center items-center py-4">
-                <h1 class="font-bold text-xl">PORTFÓLIO DE {{ strtoupper(explode(' ', $user->name)[0]) }}</h1>
+                <h1 class="font-bold text-xl">PORTFÓLIO DE {{ mb_strtoupper(explode(' ', $user->name)[0]) }}</h1>
                 <span>{{ $user->portfolios->count() }} itens encontrados</span>
                 @can('user_profile', $user)
                     <a href="{{ route('portfolio.create') }}"
