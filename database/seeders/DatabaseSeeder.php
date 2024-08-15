@@ -16,24 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Pedro Volpatto',
-            'email' => 'pedrovolpattocosta@gmail.com',
-            'password' => bcrypt('coxinha123'),
-            'description' => fake()->realText(),
-            'role' => 'adm',
-            'phone' => '(41) 99742-1004',
-            'image' => fake()->imageUrl(),
-        ]);
-
-        Project::create([
-            'title' => 'Criar um site de gerenciamento de tarefas',
-            'description' => fake()->paragraph(),
-            'slots' => 4,
-            'expiration' => fake()->dateTimeBetween($startDate = 'now',$endDate = "+2 years"),
-            'modality' => 'Híbrido',
-            'user_id' => 1,
-        ]);
 
         $this->call(SkillSeeder::class);
         $this->call(ProjectSeeder::class);
