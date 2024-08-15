@@ -19,7 +19,7 @@ class ExperienceUpdate extends Component
         'role' => ['required', 'min:8', 'max:128'],
         'description' => ['required', 'min:32', 'max:500'],
         'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
-        'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2050'],
+        'end_date' => ['nullable', 'digits:4', 'integer', 'min:1950', 'max:2050'],
     ];
 
     public function mount()
