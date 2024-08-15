@@ -74,12 +74,12 @@ Route::get('profile/{userid}', [ProfileController::class, 'index'])->name('profi
 //Portfolio
 Route::get('portfolio/{userid}', [PortfolioController::class, 'index'])->name('portfolio.index');
 //Post
-Route::get('posts/{userid}',[PostController::class, 'user_index'])->name('post.user.index');
 Route::get('post/{id}',[PostController::class, 'show'])->name('post.show');
 Route::get('posts',[PostController::class, 'index'])->name('post.index');
 Route::get('posts/oldest',[PostController::class, 'oldest'])->name('post.oldest');
 Route::get('posts/more-comments',[PostController::class, 'more_comments'])->name('post.more.comments');
 Route::get('posts/less-comments',[PostController::class, 'less_comments'])->name('post.less.comments');
+Route::get('posts/{userid}',[PostController::class, 'user_index'])->name('post.user.index');
 
 //User search
 

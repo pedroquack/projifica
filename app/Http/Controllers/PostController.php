@@ -34,10 +34,9 @@ class PostController extends Controller
         return view('post.index', compact('posts'));
     }
 
-    public function user_index($id)
-    {
+    public function user_index($id){
         $user = User::find($id);
-        return view('post.user_index', compact('user'));
+        return view('post.user_posts', compact('user'));
     }
 
     /**

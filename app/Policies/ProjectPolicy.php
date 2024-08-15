@@ -32,7 +32,7 @@ class ProjectPolicy
         return $user->id === $project->user->id;
     }
     public function project_already_reported(User $user, Project $project){
-        $report = Report::where('user_id', $user->id)->where('target_id', $project->id)->get()->count();
-        return $report === 0;
+        $report = Report::where('user_id', $user->id)->where('target_id', $project->id)->get();
+        return isset($report);
     }
 }
