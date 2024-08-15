@@ -9,7 +9,7 @@
 
     </button>
     <div x-show="isOpen" @click.away="isOpen = false"
-        class="absolute flex flex-col bg-white shadow-lg border border-neutral-100 rounded-lg p-1"
+        class="absolute flex flex-col bg-white shadow-lg border border-neutral-100 rounded-lg p-1 z-20"
         x-transition>
         {{ $slot }}
     </div>
