@@ -90,7 +90,7 @@
                 <td class="border">Usuário </td>
                 <td class="border flex gap-1 w-full justify-center">
                     @if ($r->target)
-                    <a href="{{ route('profile.index',[$r->target->name, $r->target->id]) }}"
+                    <a href="{{ route('profile.index',$r->target->id) }}"
                         class="bg-emerald-400 hover:bg-emerald-500 transition-all py-1 px-3 w-full text-center">Ver
                         perfil</a>
                     <x-modal width="w-full" color="bg-red-400 hover:bg-red-500">
