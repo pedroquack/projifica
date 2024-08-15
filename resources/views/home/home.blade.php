@@ -3,7 +3,7 @@
 <div class="flex md:my-10 my-8 justify-center">
     <div class="grid grid-cols-2">
         <div
-            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 text-white py-16 md:py-0 mx-4 md:mx-0 w-96">
+            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 text-white py-16 md:py-0 mx-4 md:mx-0 md:w-96 w-11/12">
             <h1 class="font-bold text-xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
             <p class=" font-normal text-sm">Aqui suas melhores ideias ganham vida. Conecte-se com voluntários ou candidate-se
                 para colaborar em projetos inovadores. Juntos, vamos alavancar seu portfólio e transformar sonhos em

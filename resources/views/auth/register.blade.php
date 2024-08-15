@@ -2,7 +2,7 @@
 @section('content')
 <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
     <div
-        class="bg-neutral-700 flex flex-col justify-center gap-1 px-8 text-white py-16 md:py-8 mx-4 md:mx-0 md:w-1/2 w-full shadow-xl">
+        class="bg-neutral-700 flex flex-col justify-center gap-1 md:px-8 px-2 text-white py-16 md:py-8 md:mx-0 md:w-1/2 w-11/12 shadow-xl">
         <div class="mb-5">
             <div>
                 <small class="font-thin">Já possui uma conta?</small>

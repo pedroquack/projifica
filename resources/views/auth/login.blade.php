@@ -2,7 +2,7 @@
 @section('content')
 <div class="flex md:my-16 my-8 justify-center">
         <div
-            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 shadow-sm text-white py-16 mx-4 md:mx-0 w-96">
+            class="bg-neutral-700 col-span-2 md:col-span-1 flex flex-col justify-center gap-4 px-8 shadow-sm text-white py-16 mx-4 md:mx-0 md:w-96 w-11/12">
             <div>
                 <small class="font-thin">Ainda não tem uma conta?</small>
                 <a href="{{route('register')}}"
