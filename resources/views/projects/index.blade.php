@@ -17,6 +17,9 @@
     </div>
     {{ $projects->links('pagination::tailwind') }}
     <div class="flex flex-col">
+        @if ($projects->count() == 0)
+            <h1 class="text-center font-bold text-2xl mt-8  ">Nenhum projeto encontrado!</h1>
+        @endif
         @foreach ($projects as $p)
             @php
                 $today = new DateTime();

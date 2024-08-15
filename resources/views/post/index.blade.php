@@ -2,6 +2,9 @@
 @section('content')
     <div class="flex md:my-16 my-8 justify-center md:text-start text-center">
         <div class="md:w-2/4 w-11/12 flex flex-col gap-6">
+            @if ($posts->count() == 0)
+                <h1 class="text-center font-bold text-2xl">Nenhuma postagem encontrada!</h1>
+            @endif
             @auth
             <a href="{{ route('post.create') }}" class="bg-emerald-400 hover:bg-emerald-500 p-2 text-center font-bold">
                 Criar postagem

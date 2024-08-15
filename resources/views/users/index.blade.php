@@ -5,6 +5,9 @@
         <div class="md:w-3/4 w-11/12 flex flex-col gap-6">
             {{ $users->links() }}
             <div class="flex flex-col gap-3">
+                @if ($users->count() == 0)
+                    <h1 class="text-center font-bold text-2xl">Nenhum usuário encontrado!</h1>
+                @endif
                 @foreach ($users as $u)
                     <a href="{{ route('profile.index', $u->id) }}" class="bg-white hover:bg-neutral-100 flex md:flex-row flex-col items-center p-6 gap-6">
                         <div class="h-48 min-w-48  border-emerald-400 border-2">
