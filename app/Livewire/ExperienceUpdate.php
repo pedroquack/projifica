@@ -10,8 +10,9 @@ class ExperienceUpdate extends Component
     public string $company;
     public string $role;
     public int $start_date;
-    public int $end_date;
+    public $end_date;
     public string $description;
+    public $actual;
 
     protected $rules = [
         'company' => ['required', 'min:8', 'max:96'],
@@ -27,7 +28,11 @@ class ExperienceUpdate extends Component
         $this->role = $this->e->role;
         $this->description = $this->e->description;
         $this->start_date = $this->e->start_date;
-        $this->end_date = $this->e->end_date;
+        if($this->e->end_date == 0){
+            $this->end_date = null;
+        }else{
+            $this->end_date = $this->e->end_date;
+        }
     }
 
     public function render()
@@ -37,6 +42,10 @@ class ExperienceUpdate extends Component
 
     public function update(){
         $this->validate();
+
+        if(!isset($this->end_date) || $this->actual == true){
+            $this->end_date = 0;
+        }
 
         $this->e->update([
             'company' => $this->company,

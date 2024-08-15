@@ -46,6 +46,10 @@
                 <label class="font-bold" for="end_date">Final (ano)</label>
                 <input class="rounded-lg @if ($errors->has('end_date')) input-error @endif" placeholder="Ex: 2010"
                     type="number" wire:model="end_date" id= "end_date" min="1950" max="2050" step="1">
+                    <div class="flex flex-row my-1 items-center gap-1">
+                        <input type="checkbox" wire:model="actual" id="actual">
+                        <label for="actual">É meu emprego atual</label>
+                    </div>
                 @if ($errors->has('end_date'))
                     <span class="invalid-feedback">
                         <p>{{ $errors->first('end_date') }}</p>
