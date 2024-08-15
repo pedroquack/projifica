@@ -30,9 +30,9 @@ class ProfileImageUpdate extends Component
 
         $user = User::find($this->user_id);
         $extension = $this->image->getClientOriginalExtension();
-        $file = $this->image->storePubliclyAs('images/users', time().'.'.$extension,'real_public');
+        $file = $this->image->storeAs('images/users', time().'.'.$extension, 'public');
 
-        $user->image = $file;
+        $user->image = "storage/".$file;
 
         $user->save();
 

@@ -67,8 +67,8 @@ class PostController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $path = 'images/posts/';
-            $file->move($path, $filename);
-            $post->image = $path . $filename;
+            $file->storeAs($path, $filename,'public');
+            $post->image = "storage/" . $path . $filename;
         }
         $post->title = $request->title;
         $post->body = $request->body;
@@ -116,8 +116,8 @@ class PostController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $path = 'images/posts/';
-            $file->move($path, $filename);
-            $post->image = $path . $filename;
+            $file->storeAs($path, $filename, 'public');
+            $post->image = $post->image = "storage/" . $path . $filename;
         }
         $post->title = $request->title;
         $post->body = $request->body;

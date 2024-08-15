@@ -41,14 +41,14 @@ class PortfolioController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $path = 'images/portfolio/';
-            $file->move($path, $filename);
+            $file->storeAs($path,$filename,'public');
         }
 
         $portfolio = Portfolio::create([
             'name' => $request->name,
             'description' => $request->description,
             'url' => $request->url,
-            'image' => $path . $filename,
+            'image' => "storage/" . $path . $filename,
             'user_id' => $request->user_id,
         ]);
 
@@ -91,8 +91,8 @@ class PortfolioController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $path = 'images/portfolio/';
-            $file->move($path, $filename);
-            $portfolio->image = $path . $filename;
+            $file->storeAs($path,$filename,'public');
+            $portfolio->image = "storage/" . $path . $filename;
         }
 
         $portfolio->name = $request->name;
