@@ -170,7 +170,7 @@
                 </button>
 
                 <div x-cloak x-show="isOpen" class="bg-white flex flex-col p-2" x-collapse>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col gap-3">
                         @can('user_profile', $user)
                         <x-modal>
                             <x-slot:button>
