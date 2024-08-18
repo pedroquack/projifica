@@ -11,7 +11,7 @@ class Reports extends Component
     public function render()
     {
         return view('livewire.dashboard.reports', [
-            'reports' => Report::all()
+            'reports' => Report::orderBy('created_at','desc')->get(),
          ]);
     }
 }
