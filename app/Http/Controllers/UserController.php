@@ -35,8 +35,8 @@ class UserController extends Controller
         Gate::authorize('user_profile',$user);
 
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required','max:1000','min:150'],
+            'name' => ['required', 'string', 'min:3','max:255'],
+            'description' => ['required','max:1000','min:96'],
             'phone' => ['required',"unique:users,phone,{$id},id",'size:15']
         ]);
 
