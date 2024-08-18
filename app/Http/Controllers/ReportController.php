@@ -35,10 +35,13 @@ class ReportController extends Controller
                 'user_id' =>$request->user_id,
             ]);
 
+            $url = route('dashboard/reports');
+
             $notification = [
                 'subject' => 'Notificação: Alguem fez uma denúncia',
                 'title' => 'Alguem acabou de fazer uma denúncia!',
-                'message' => 'O usuário ' . $report->user->name . ' fez uma denúncia! Que tal conferir?'
+                'message' => 'O usuário ' . $report->user->name . ' fez uma denúncia! Que tal conferir?',
+                'url' => $url,
             ];
 
             foreach(User::where('role','adm')->get() as $adm){

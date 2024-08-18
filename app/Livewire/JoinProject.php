@@ -38,10 +38,13 @@ class JoinProject extends Component
         $this->proposal ? $candidate->proposal = $this->proposal : $candidate->proposal = "Sem proposta";
         $candidate->save();
 
+        $url = route('project.show',$this->project->id);
+
         $notification = [
             'subject' => 'Notificação: Alguem se candidatou ao seu projeto',
             'title' => 'Alguem acabou de se candidatar ao seu projeto!',
             'message' => 'O usuário ' . $this->user->name . ' acabou de se candidatar ao seu projeto: ' . $this->project->title,
+            'url' => $url,
         ];
 
         try {

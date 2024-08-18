@@ -34,10 +34,13 @@ class Comment extends Component
             'post_id' => $this->post->id
         ]);
 
+        $url = route('post.show',$this->post->id);
+
         $notification = [
-            'subject' => 'Notificação: Alguem comentou no seu post',
+            'subject' => 'Notificação!',
             'title' => 'Alguem acabou de fazer um comentário na sua postagem!',
             'message' => 'O usuário ' . $comment->user->name . ' comentou na sua postagem: ' . $comment->post->title,
+            'url' => $url,
         ];
 
         try {
