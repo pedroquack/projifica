@@ -35,7 +35,7 @@ class ReportController extends Controller
                 'user_id' =>$request->user_id,
             ]);
 
-            $url = route('dashboard/reports');
+            $url = route('admin.reports');
 
             $notification = [
                 'subject' => 'Notificação: Alguem fez uma denúncia',
