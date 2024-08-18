@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\LinkUserProject;
 use App\Models\Project;
 use App\Models\Report;
 use App\Models\User;
@@ -11,14 +12,15 @@ class ProjectPolicy
     public function join(User $user, Project $project){
         if($user->id === $project->user->id){
             return false;
-        }else{
-            foreach($project->candidates as $c){
-                if($c->user->id === $user->id){
-                    return false;
-                }
-            };
-            return true;
         }
+        $userProject = LinkUserProject::where('user_id', $user->id)->where('project_id', $project->id)->first();
+        if($userProject){
+            return false;
+        }
+        if($project->expiration < now()){
+            return false;
+        }
+        return true;
     }
 
     public function read_proposals(User $user, Project $project){

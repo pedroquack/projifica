@@ -154,7 +154,11 @@
                 @livewire('candidates', ['project' => $project])
             </x-modal>
             @else
-            <span class="text-center">Você já se candidatou a esse projeto!</span>
+            @if($project->user->id !== Auth::user()->id && $project->expiration > now())
+                <span class="text-center">Você já se candidatou a esse projeto!</span>
+            @elseif($project->expiration < now())
+                <span class="text-center">Este projeto não aceita mais candidatos!</span>
+            @endif
             @endcan
         </div>
     </div>

@@ -56,7 +56,7 @@
                     </div>
                     <div class="flex md:flex-row flex-col items-center gap-4">
                         @cannot('join',$p)
-                            @if ($p->user->id !== Auth::user()->id)
+                            @if ($p->user->id !== Auth::user()->id && $p->expiration > now())
                                 Você já se candidatou a esse projeto!
                             @endif
                         @endcannot
