@@ -11,7 +11,7 @@
                 @foreach ($users as $u)
                     <a href="{{ route('profile.index', $u->id) }}" class="bg-white hover:bg-neutral-100 flex md:flex-row flex-col items-center p-6 gap-6">
                         <div class="h-48 w-fit border-emerald-400 border-2">
-                            <img class="h-full min-w-64 max-w-64 object-cover" src="{{ asset($u->image) }}" alt="">
+                            <img class="h-full min-w-48 max-w-48 object-cover" src="{{ asset($u->image) }}" alt="">
                         </div>
                         <div class="flex flex-col justify-around h-full gap-3">
                             <div class="flex justify-evenly items-center md:justify-between">
