@@ -226,6 +226,7 @@ return [
         'role' => 'cargo',
         'image' => 'imagem',
         'proposal' => 'proposta',
+        'reason' => 'motivo',
     ],
 
     'values' => [

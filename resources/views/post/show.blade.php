@@ -25,24 +25,16 @@
                     <button type="submit" class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
                 </form>
                 @else
-                    @can('post_already_reported', $post)
-                        <x-modal color="bg-white hover:bg-neutral-100">
-                            <x-slot:button>
-                                Denunciar
-                            </x-slot:button>
-                            <div class="text-center">
-                                <h1 class="font-bold text-lg mb-3">Fazer uma denúncia</h1>
-                                <form action="{{ route('report.store','post') }}" method="post" class="flex flex-col gap-3">
-                                    @csrf
-                                    <input type="hidden" name="target_id" value="{{ $post->id }}">
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                    <button type="submit" class="bg-red-400 hover:bg-red-500 p-2">Denunciar</button>
-                                </form>
-                            </div>
-                        </x-modal>
-                    @else
-                        <span class="text-red-500">Postagem denunciada por você</span>
-                    @endcan
+                @can('post_already_reported', $post)
+                <x-modal color="bg-white hover:bg-neutral-100">
+                    <x-slot:button>
+                        Denunciar
+                    </x-slot:button>
+                    @livewire('report', ['target_id' => $post->id, 'type' => 'post', 'user_id' => Auth::user()->id],)
+                </x-modal>
+                @else
+                <span class="text-red-500">Postagem denunciada por você</span>
+                @endcan
                 @endcan
             </x-options_dropdown>
             @endauth
@@ -105,26 +97,16 @@
                                         class="hover:bg-neutral-200 transition-all p-2">Excluir</button>
                                 </form>
                                 @else
-                                    @can('comment_already_reported', $c)
-                                        <x-modal color="bg-white hover:bg-neutral-100">
-                                            <x-slot:button>
-                                                Denunciar
-                                            </x-slot:button>
-                                            <div class="text-center">
-                                                <h1 class="font-bold text-lg mb-3">Fazer uma denúncia</h1>
-                                                <form action="{{ route('report.store','comment') }}" method="post"
-                                                    class="flex flex-col gap-3">
-                                                    @csrf
-                                                    <input type="hidden" name="target_id" value="{{ $c->id }}">
-                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                                    <button type="submit"
-                                                        class="bg-red-400 hover:bg-red-500 p-2">Denunciar</button>
-                                                </form>
-                                            </div>
-                                        </x-modal>
-                                    @else
-                                        <span class="text-red-500">Comentário denunciado por você</span>
-                                    @endcan
+                                @can('comment_already_reported', $c)
+                                <x-modal color="bg-white hover:bg-neutral-100">
+                                    <x-slot:button>
+                                        Denunciar
+                                    </x-slot:button>
+                                    @livewire('report', ['target_id' => $c->id, 'type' => 'comment', 'user_id' => Auth::user()->id],)
+                                </x-modal>
+                                @else
+                                <span class="text-red-500">Comentário denunciado por você</span>
+                                @endcan
                                 @endcan
                             </x-options_dropdown>
                             @endauth

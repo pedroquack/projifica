@@ -51,8 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/less-popular', [ProjectController::class, 'less_popular'])->name('project.unpopular');
     Route::get('projects/search', [ProjectController::class, 'search'])->name('project.search');
 
-    //Report
-    Route::post('report/{type}', [ReportController::class, 'store'])->name('report.store');
 
     Route::middleware('isAdmin')->group(function (){
         Route::get('dashboard/chart', [AdminController::class ,'dashboard'])->name('admin.dashboard');

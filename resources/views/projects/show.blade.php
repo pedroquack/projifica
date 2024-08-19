@@ -35,16 +35,7 @@
                                 <x-slot:button>
                                     Denunciar
                                 </x-slot:button>
-                                <div class="text-center">
-                                    <h1 class="font-bold text-lg mb-3">Fazer uma denúncia</h1>
-                                    <form action="{{ route('report.store','project') }}" method="post"
-                                        class="flex flex-col gap-3">
-                                        @csrf
-                                        <input type="hidden" name="target_id" value="{{ $project->id }}">
-                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                        <button type="submit" class="bg-red-400 hover:bg-red-500 p-2">Denunciar</button>
-                                    </form>
-                                </div>
+                                @livewire('report', ['target_id' => $project->id, 'type' => 'project', 'user_id' => Auth::user()->id],)
                             </x-modal>
                             @else
                             <span class="text-red-500">Projeto denunciado por você</span>
