@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -29,31 +30,46 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if($request->hasFile('image')){
+            $temp_img = $request->file('image');
+            $path = $temp_img->store('temp','public');
+            $file_name = $request->file('image')->getClientOriginalName();
+            session(['temp_image' => $path,'file_name' => $file_name]);
+        }
+
+        if(session()->has('temp_image')){
+            $image_validation = 'nullable';
+        }else{
+            $image_validation = 'required';
+        }
+
         $request->validate([
             'name' => ['required', 'string','min:3', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
             'description' => ['required','max:1000','min:96'],
-            'image' => ['required','mimes:png,jpg,jpeg,webp'],
+            'image' => [$image_validation,'mimes:png,jpg,jpeg,webp'],
             'phone' => ['unique:users','required','size:15']
         ]);
 
-        if($request->has('image')){
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $path = 'images/users/';
-            $file->move($path, $filename);
-        }
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->description = $request->description;
+        $user->phone = $request->phone;
+        $user->save();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'description' => $request->description,
-            'phone' => $request->phone,
-            'image' => $path.$filename,
-        ]);
+        if(session()->get('temp_image')){
+            $temp_img = session()->get('temp_image');
+            $extension = pathinfo($temp_img, PATHINFO_EXTENSION);
+            $filename = $user->id."_".time().".". $extension;
+            $path = 'images/users/';
+            Storage::move("public/" . $temp_img, "public/".$path.$filename);
+            $user->image = "storage/" . $path . $filename;
+            session()->forget(['temp_image','file_name']);
+            $user->save();
+        }
 
         event(new Registered($user));
 

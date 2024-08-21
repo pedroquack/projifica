@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -30,7 +31,10 @@ class ProfileImageUpdate extends Component
 
         $user = User::find($this->user_id);
         $extension = $this->image->getClientOriginalExtension();
-        $file = $this->image->storeAs('images/users', time().'.'.$extension, 'public');
+        $file = $this->image->storeAs('images/users', $user->id."_".time().'.'.$extension, 'public');
+
+        $old_path = str_replace('storage/', 'public/', $user->image);
+        Storage::delete($old_path);
 
         $user->image = "storage/".$file;
 

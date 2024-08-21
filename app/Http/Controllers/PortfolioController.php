@@ -27,12 +27,19 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
 
+        if($request->hasFile('image')){
+            $temp_img = $request->file('image');
+            $path = $temp_img->store('temp','public');
+            $file_name = $request->file('image')->getClientOriginalName();
+            session(['temp_image' => $path,'file_name' => $file_name]);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'max:500', 'min:150'],
             'url' => ['nullable','url'],
             'skills' => ['required'],
-            'image' => ['required', 'mimes:png,jpg,jpeg,webp'],
+            'image' => ['nullable', 'mimes:png,jpg,jpeg,webp'],
             'user_id' => ['required'],
         ]);
 

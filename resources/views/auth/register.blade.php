@@ -11,7 +11,7 @@
             </div>
             <h1 class="font-bold text-xl">Bem-vindo ao <span class="text-emerald-400">PROJIFICA</span></h1>
         </div>
-        <form action="{{route('register')}}" method="post" class="grid grid-cols-2 gap-4" enctype="multipart/form-data">
+        <form action="{{route('register')}}" method="post" id="register-form" class="grid grid-cols-2 gap-4" enctype="multipart/form-data">
             @csrf
             <x-input :class="'col-span-2 md:col-span-1'" :id="'name'" :label="'Nome Completo'" :type="'text'"
                 :name="'name'" :placeholder="'Digite aqui seu nome completo'" />
@@ -22,8 +22,7 @@
             <div class="flex flex-col md:col-span-1 col-span-2">
                 <label for="tel" class="font-bold">Telefone</label>
                 <input type="tel" name="phone" id="tel" pattern="\(\d{2}\)\s*\d{5}-\d{4}" class=" text-black rounded-lg
-                @if($errors->has('phone')) input-error @endif"
-                    placeholder="(00) 00000-0000" value="{{old('phone')}}">
+                @if($errors->has('phone')) input-error @endif" placeholder="(00) 00000-0000" value="{{old('phone')}}">
                 @if ($errors->has('phone'))
                 <span class="invalid-feedback">
                     <p>{{ $errors->first('phone')}}</p>
@@ -46,11 +45,11 @@
     tel.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
     tel.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
 
-const mascaraTelefone = (valor) => {
-    valor = valor.replace(/\D/g, "")
-    valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
-    valor = valor.replace(/(\d)(\d{4})$/, "$1-$2")
-    tel.value = valor // Insere o(s) valor(es) no campo
+    const mascaraTelefone = (valor) => {
+        valor = valor.replace(/\D/g, "")
+        valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+        valor = valor.replace(/(\d)(\d{4})$/, "$1-$2")
+        tel.value = valor // Insere o(s) valor(es) no campo
     }
 </script>
 @endsection

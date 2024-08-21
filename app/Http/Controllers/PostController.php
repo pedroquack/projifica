@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -52,6 +53,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        if($request->hasFile('image')){
+            $temp_img = $request->file('image');
+            $path = $temp_img->store('temp','public');
+            $file_name = $request->file('image')->getClientOriginalName();
+            session(['temp_image' => $path,'file_name' => $file_name]);
+        }
+
         $request->validate([
             'title' => ['required', 'min:8', 'max:96'],
             'body' => ['required', 'min:64', 'max:5000'],
@@ -61,14 +70,16 @@ class PostController extends Controller
 
         $post = new Post();
 
-        if ($request->has('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
+        if(session()->get('temp_image')){
+            $temp_img = session()->get('temp_image');
+            $extension = pathinfo($temp_img, PATHINFO_EXTENSION);
+            $filename = $request->user_id."_".time().".". $extension;
             $path = 'images/posts/';
-            $file->storeAs($path, $filename,'public');
+            Storage::move("public/" . $temp_img, "public/".$path.$filename);
             $post->image = "storage/" . $path . $filename;
+            session()->forget(['temp_image','file_name']);
         }
+
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = $request->user_id;
@@ -104,19 +115,31 @@ class PostController extends Controller
 
         Gate::authorize('update',$post);
 
+        if($request->hasFile('image')){
+            $temp_img = $request->file('image');
+            $path = $temp_img->store('temp','public');
+            $file_name = $request->file('image')->getClientOriginalName();
+            session(['temp_image' => $path,'file_name' => $file_name]);
+        }
+
         $request->validate([
             'title' => ['required', 'min:8', 'max:96'],
             'body' => ['required', 'min:64', 'max:5000'],
             'image' => ['nullable', 'mimes:png,jpg,jpeg,webp'],
         ]);
 
-        if ($request->has('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
+        if(session()->get('temp_image')){
+            $temp_img = session()->get('temp_image');
+            $extension = pathinfo($temp_img, PATHINFO_EXTENSION);
+            $filename = $post->user_id."_".time().".". $extension;
             $path = 'images/posts/';
-            $file->storeAs($path, $filename, 'public');
-            $post->image = $post->image = "storage/" . $path . $filename;
+            Storage::move("public/" . $temp_img, "public/".$path.$filename);
+            if(isset($post->image)){
+                $old_path = str_replace('storage/', 'public/', $post->image);
+                Storage::delete($old_path);
+            }
+            $post->image = "storage/" . $path . $filename;
+            session()->forget(['temp_image','file_name']);
         }
         $post->title = $request->title;
         $post->body = $request->body;

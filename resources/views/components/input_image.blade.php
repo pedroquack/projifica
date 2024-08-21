@@ -21,6 +21,11 @@
     const input_file = document.getElementById('image');
     const img_view = document.getElementById('img-view');
     const p = document.getElementById("image-txt");
+    const file_name = @json(session()->get('file_name'));
+
+    if(file_name){
+        p.textContent = file_name;
+    }
 
     input_file.addEventListener('change', (event) =>{
         let img_link = input_file.files[0].name;
@@ -37,16 +42,4 @@
         p.textContent = img_link
     });
 
-    window.addEventListener("resize", text_change);
-    window.addEventListener("load", text_change);
-
-    function text_change(){
-        if(!input_file.files[0]){
-            if(window.innerWidth <= 990){
-                p.textContent = "Adicionar Imagem"
-            }else{
-                p.textContent = "Arraste e solte, ou clique aqui para adicionar uma imagem"
-            }
-        }
-    }
 </script>
