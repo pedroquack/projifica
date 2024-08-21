@@ -28,8 +28,8 @@ class Education extends Component
         }
 
         return [
-            'school' => ['required', 'min:8', 'max:96'],
-            'course' => ['required', 'min:8', 'max:128'],
+            'school' => ['required', 'min:3', 'max:96'],
+            'course' => ['required', 'min:3', 'max:128'],
             'start_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100', $start_date_validation],
             'end_date' => ['required', 'digits:4', 'integer', 'min:1950', 'max:2100', $end_date_validation],
         ];
