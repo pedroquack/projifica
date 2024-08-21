@@ -8,6 +8,7 @@ use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PortfolioController extends Controller
 {
@@ -34,30 +35,38 @@ class PortfolioController extends Controller
             session(['temp_image' => $path,'file_name' => $file_name]);
         }
 
+        if(session()->has('temp_image')){
+            $image_validation = 'nullable';
+        }else{
+            $image_validation = 'required';
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'max:500', 'min:150'],
             'url' => ['nullable','url'],
             'skills' => ['required'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg,webp'],
+            'image' => [$image_validation, 'mimes:png,jpg,jpeg,webp'],
             'user_id' => ['required'],
         ]);
 
-        if ($request->has('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
+        $portfolio = new Portfolio();
+
+        if(session()->get('temp_image')){
+            $temp_img = session()->get('temp_image');
+            $extension = pathinfo($temp_img, PATHINFO_EXTENSION);
+            $filename = $portfolio->user_id."_".time().".". $extension;
             $path = 'images/portfolio/';
-            $file->storeAs($path,$filename,'public');
+            Storage::move("public/" . $temp_img, "public/".$path.$filename);
+            $portfolio->image = "storage/" . $path . $filename;
+            session()->forget(['temp_image','file_name']);
         }
 
-        $portfolio = Portfolio::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'url' => $request->url,
-            'image' => "storage/" . $path . $filename,
-            'user_id' => $request->user_id,
-        ]);
+        $portfolio->name = $request->name;
+        $portfolio->description = $request->description;
+        $portfolio->url = $request->url;
+        $portfolio->user_id = $request->user_id;
+        $portfolio->save();
 
         $skills = $request->input('skills');
         foreach ($skills as $s) {
@@ -84,22 +93,40 @@ class PortfolioController extends Controller
         $portfolio = Portfolio::find($id);
         Gate::authorize('update',$portfolio);
 
+        if($request->hasFile('image')){
+            $temp_img = $request->file('image');
+            $path = $temp_img->store('temp','public');
+            $file_name = $request->file('image')->getClientOriginalName();
+            session(['temp_image' => $path,'file_name' => $file_name]);
+        }
+
+        if(session()->has('temp_image')){
+            $image_validation = 'nullable';
+        }else{
+            $image_validation = 'required';
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'max:500', 'min:150'],
             'url' => ['nullable','url'],
             'skills' => ['required'],
-            'image' => ['mimes:png,jpg,jpeg,webp'],
+            'image' => [$image_validation,'mimes:png,jpg,jpeg,webp'],
             'user_id' => ['required'],
         ]);
 
-        if ($request->has('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
+        if(session()->get('temp_image')){
+            $temp_img = session()->get('temp_image');
+            $extension = pathinfo($temp_img, PATHINFO_EXTENSION);
+            $filename = $portfolio->user_id."_".time().".". $extension;
             $path = 'images/portfolio/';
-            $file->storeAs($path,$filename,'public');
+            Storage::move("public/" . $temp_img, "public/".$path.$filename);
+            if(isset($post->image)){
+                $old_path = str_replace('storage/', 'public/', $portfolio->image);
+                Storage::delete($old_path);
+            }
             $portfolio->image = "storage/" . $path . $filename;
+            session()->forget(['temp_image','file_name']);
         }
 
         $portfolio->name = $request->name;
