@@ -2,7 +2,7 @@
     <div x-data="{mobileMenuIsOpen: false}" class="flex md:flex-row flex-col items-center justify-between md:gap-8 ">
         <div class="flex justify-between items-center w-full md:gap-10 gap-1">
             <div class="w-48">
-                <a href={{route('home')}}><img src="{{asset('images/projifica_logo.png')}}" alt=""></a>
+                <a href={{route('home')}} class="text-emerald-400 hover:text-emerald-500 text-3xl font-bold tracking-wider">PROJIFICA</a>
             </div>
             <form action="{{ route('project.search') }}" class="flex w-full">
                 <input class="rounded-s-lg border-0 focus:outline-0 w-full text-sm md:text-sm" type="text" name="search_bar"
